@@ -108,17 +108,23 @@ class SinglyLinkedList {
     return true;
   }
   reverse() {
+    // head 와 tail 부분을 교체
     let node = this.head;
     this.head = this.tail;
     this.tail = node;
+
+    // 각 노드들의 구조를 추적하고 교체하기 위한 변수
+    let pre = null;
     let next;
-    let prev = null;
+
+    // 노드 갯수만큼 반복문을 돌면서 다음노드를 가르키면서 그 노드의 next값으로 pre값을 가르키게 바꾼다.
     for (let i = 0; i < this.length; i++) {
       next = node.next;
-      node.next = prev;
-      prev = node;
+      node.next = pre;
+      pre = node;
       node = next;
     }
+
     return this;
   }
 }
@@ -139,6 +145,6 @@ l_lisst.push(50);
 // console.log(l_lisst.insert(2, 'Hi 20'));
 // console.log(l_lisst.get(2));
 
-console.log(l_lisst.remove(1));
+l_lisst.reverse();
 
 console.log(l_lisst);
