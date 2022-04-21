@@ -6,9 +6,12 @@ var name = 'Hi3';
 
 console.log(name);
 
-// let은 바로 오류를 띄운다.
-// 선언은 블록당 한번밖에 못한다.
-let name2 = 'Hi1';
-let name2 = 'Hi2';
+/*
+let은 바로 오류를 띄운다.
+선언은 블록당 한번밖에 못한다.
+*/
+
+// let name2 = 'Hi1';
+// let name2 = 'Hi2';
 
 console.log(name2);
