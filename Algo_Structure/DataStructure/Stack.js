@@ -11,14 +11,19 @@ class Stack {
     this.last = null;
     this.length = 0;
   }
+  /*
+  push 1 2 3 
+  3 -> 2 -> 1 
+  */
   push(val) {
     let node = new Node(val);
     if (!this.first) {
       this.first = node;
       this.last = node;
     } else {
-      this.first.next = node;
-      this.last = node;
+      let temp = this.first;
+      this.first = node;
+      this.first.next = temp;
     }
     this.length++;
     return node;
@@ -40,10 +45,10 @@ let stack = new Stack();
 stack.push(1);
 stack.push(2);
 stack.push(3);
-console.log(stack.pop());
-console.log(stack.pop());
-console.log(stack.pop());
-console.log(stack.pop());
+stack.pop();
+stack.pop();
+stack.pop();
+
 stack.push(4);
 stack.push(5);
 
