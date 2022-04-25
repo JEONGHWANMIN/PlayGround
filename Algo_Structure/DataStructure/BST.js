@@ -71,12 +71,73 @@ class BinarySearchTree {
       return false;
     }
   }
+  // 넓이 우선 탐색
+  BFS() {
+    if (!this.root) return null;
+    let queue = [];
+    let visit = [];
+    queue.push(this.root);
+    while (queue.length !== 0) {
+      let node = queue.shift();
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
+      visit.push(node.val);
+    }
+    return visit;
+  }
+  // 깊이 우선 탐색 (전위순회) : 왼쪽부터 탐색
+  DFSPreOrder() {
+    if (!this.root) return null;
+    let visit = [];
+    function traversion(node) {
+      // left traversion
+      visit.push(node.val);
+      if (node.left) traversion(node.left);
+      if (node.right) traversion(node.right);
+    }
+    traversion(this.root);
+    // [ 10, 6, 3, 8, 15, 20 ]
+    return visit;
+  }
+  // (후위순회)
+  DFSPostOrder() {
+    if (!this.root) return null;
+    let visit = [];
+    function traversion(node) {
+      if (node.left) traversion(node.left);
+      if (node.right) traversion(node.right);
+      visit.push(node.val);
+    }
+    traversion(this.root);
+    // [ 3, 8, 6, 20, 15, 10 ]
+    return visit;
+  }
+  // (중위순회)
+  DFSInOrder() {
+    // [3,6,8,10,15,20]
+    if (!this.root) return null;
+    let visit = [];
+    function traversion(node) {
+      if (node.left) traversion(node.left);
+      visit.push(node.val);
+      if (node.right) traversion(node.right);
+    }
+    traversion(this.root);
+    return visit;
+  }
 }
 
 let t = new BinarySearchTree();
 
 t.insert(10);
-t.insert(2);
+t.insert(6);
+t.insert(15);
 t.insert(3);
-t.find(2);
-console.log(t.contain(14));
+t.insert(8);
+t.insert(20);
+
+console.log(t.DFSInOrder());
