@@ -89,7 +89,7 @@ class BinarySearchTree {
     }
     return visit;
   }
-  // 깊이 우선 탐색 (전위순회) : 왼쪽부터 탐색
+  // 깊이 우선 탐색 (전위순회) : 루트부터 왼쪽 아래로 탐색
   DFSPreOrder() {
     if (!this.root) return null;
     let visit = [];
@@ -103,7 +103,7 @@ class BinarySearchTree {
     // [ 10, 6, 3, 8, 15, 20 ]
     return visit;
   }
-  // (후위순회)
+  // (후위순회) : 왼쪽 아래 리프노드 부터 위로 올라오면서 탐색 루트가 마지막
   DFSPostOrder() {
     if (!this.root) return null;
     let visit = [];
@@ -116,9 +116,8 @@ class BinarySearchTree {
     // [ 3, 8, 6, 20, 15, 10 ]
     return visit;
   }
-  // (중위순회)
+  // (중위순회) : 루트가 처음이나 마지막이 아니다. 왼쪽 리프 노드부터 차례대로 탐색
   DFSInOrder() {
-    // [3,6,8,10,15,20]
     if (!this.root) return null;
     let visit = [];
     function traversion(node) {
@@ -127,6 +126,7 @@ class BinarySearchTree {
       if (node.right) traversion(node.right);
     }
     traversion(this.root);
+    // [3,6,8,10,15,20]
     return visit;
   }
 }
