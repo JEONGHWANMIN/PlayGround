@@ -1,1 +1,18 @@
 ##### auto push start #####
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    Study.js
+	modified:   commit.sh
+	modified:   commit.sh.log
+
+[master 3ae8179] PlayGround ~
+ 3 files changed, 2 insertions(+), 11 deletions(-)
+ delete mode 100644 Study.js
+ mode change 100644 => 100755 commit.sh
+To github.com:JEONGHWANMIN/PlayGround.git
+   675de3e..3ae8179  master -> master
+##### auto push end #####

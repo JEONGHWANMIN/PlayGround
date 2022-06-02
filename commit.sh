@@ -1,6 +1,6 @@
 #!/bin/bash
-echo '##### auto push start #####'
-
+# echo '##### auto push start #####'
+echo "ToDay Pusn Start : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)"
 cd ~/ml/PlayGround
 git add .
 git status
