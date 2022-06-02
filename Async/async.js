@@ -77,7 +77,7 @@ step1(function (value1) {
   1. new 연산자를 통해서 만들 수 있다.
   2. 만든 프로미스는 컬백 함수를 인자로 받는데 그 안에는 2가지 파라미터가 들어간다 . (resolve , reject)
 
-  new Promise( (resolve , reject) => {}) 
+  -> new Promise( (resolve , reject) => {}) 
 
   Promise 3 가지 상태
     1. Pending (대기)
@@ -99,7 +99,7 @@ step1(function (value1) {
     } ) 
     요청 실패된 데이터는 catch() 라는 키워드를 통해서 데이터를 받을 수 있다.
 
-  Promise 정리
+  Promise 개념정리
   1. 비동기 처리 방법 중 하나
   2. Promise는 new 연산자를 사용해서 만들어 낸다 .
   3. Promise는 컬백 함수 인자로 (resolve , reject) 를 받는데 , resolve는 then() , reject() catch() 데이터를 받는다.
@@ -107,11 +107,20 @@ step1(function (value1) {
 
 /* 1. 사용  */
 // const promise = new Promise((resolve, reject) => {
-//   resolve('성공');
+//   setTimeout(() => {
+//     resolve('성공!');
+//   }, 3000);
 // });
-// promise.then((data) => {
-//   console.log(data);
-// });
+
+// console.log(promise);
+
+// promise
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 /* 2. 결괏값 then 으로 이어 받기 (Promise Chaining) */
 
@@ -119,6 +128,10 @@ step1(function (value1) {
 //   setTimeout(() => {
 //     resolve(10);
 //   }, 1000);
+
+//   setTimeout(() => {
+//     reject(40);
+//   }, 2000);
 // });
 
 // promise1
@@ -136,9 +149,12 @@ step1(function (value1) {
 //   })
 //   .then((data) => {
 //     console.log('끝 !!', data);
+//   })
+//   .catch((error) => {
+//     console.log(error);
 //   });
 
-/* 3. 프로미스 resolve reject!!! */
+/* 3. 프로미스 resolve reject!!! -> reject() , resolve()*/
 
 // new Promise((resolve, reject) => {
 //   reject(0);
@@ -154,20 +170,46 @@ step1(function (value1) {
 /* 4. 변수로 프로미스 받기 !! */
 
 // const promise = new Promise((resolve, reject) => {
-//   console.log('히히히');
+//   console.log('히히');
 //   setTimeout(() => {
 //     resolve('성공!!');
 //   }, 2000);
 // });
-// // data를 찍어보면 ?
-// // 여기서 프로미스 객체를 콘솔로 찍어보면 ??
+// console.log(promise);
 // console.log('딴짓 ~ 1 ');
 // console.log('딴짓 ~ 2');
 // promise.then((data) => {
 //   console.log(data);
 // });
 
-// ================================ Part3. async await  ================================
+// const promise = new Promise((resolve, reject) => {
+//   reject('실패');
+//   setTimeout(() => {
+//     resolve('성공');
+//   }, 2000);
+// });
+
+// promise
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+// const promise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject('실패');
+//   }, 2000);
+// });
+
+// console.log(promise);
+
+// promise.catch((data) => {
+//   console.log(data);
+// });
+
+// ================================ Part3. async & await  ================================
 
 /*
 
@@ -179,9 +221,9 @@ async await 이란 ?
   1. await 을 사용하려면 함수 앞에 async를 붙여준다 . 
   2. await 뒤에는 promise 객체가 온다. (꼭 프로미스 객체가 올 필요는 없지만 , 대체적으로 프로미스 처리를 위해서 사용됨)
   
-  예외처리
+  예외처리 (then , catch)
   async await 은 Promise랑 다르게 try {}, catch {}문법을 사용해서 예외처리를 한다.
-  try , catch 후 무조건 실행해야 하는 코드가 있을 시 finally 로 감싸준다.
+  try , catch 후 무조건 실행해야 하는 코드가 있을 시 finally {}로 감싸준다.
 
 */
 
@@ -189,12 +231,17 @@ async await 이란 ?
 // const promise = new Promise((resolve, reject) => {
 //   setTimeout(() => {
 //     resolve('성공');
+//     reject('실패');
 //   }, 2000);
 // });
 
 // async function example() {
-//   let data = promise;
-//   console.log(data);
+//   try {
+//     let data = await promise;
+//     console.log(data);
+//   } catch (err) {
+//     console.log(err);
+//   }
 // }
 
 // example();
@@ -264,5 +311,34 @@ async await 이란 ?
 */
 
 // async function example() {
-//   return 20;
+//   return new Promise((resolve, reject) => {
+//     resolve('성공');
+//   });
 // }
+
+// async function example() {
+//   return '성공';
+// }
+
+// example().then((data) => {
+//   console.log(data);
+// });
+
+// (async () => {
+//   let data = await example();
+//   console.log(data);
+// })();
+
+// const promise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject('실패');
+//   }, 2000);
+// });
+
+// promise
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
