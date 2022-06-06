@@ -1,2 +1,32 @@
 
 ##### PUSH START : 2022-06-03 17:30:00 #####
+On branch master
+Your branch is ahead of 'origin/master' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   SuperArray.js
+	modified:   commit.sh
+	modified:   commit.sh.log
+	new file:   jest/.gitignore
+	new file:   jest/README.md
+	new file:   jest/package-lock.json
+	new file:   jest/package.json
+	new file:   jest/sum.js
+	new file:   jest/sum.test.js
+
+[master 3532751] PlayGround ~ 🌟
+ 9 files changed, 6113 insertions(+), 21 deletions(-)
+ create mode 100644 SuperArray.js
+ rewrite commit.sh.log (99%)
+ create mode 100644 jest/.gitignore
+ create mode 100644 jest/README.md
+ create mode 100644 jest/package-lock.json
+ create mode 100644 jest/package.json
+ create mode 100644 jest/sum.js
+ create mode 100644 jest/sum.test.js
+To github.com:JEONGHWANMIN/PlayGround.git
+   0d81d53..3532751  master -> master
+##### AUTO PUSH END #####
+##### PUSH START : 2022-06-06 17:30:00 #####
