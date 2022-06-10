@@ -71,3 +71,21 @@ To github.com:JEONGHWANMIN/PlayGround.git
    685721b..03623a5  master -> master
 ##### AUTO PUSH END #####
 ##### PUSH START : 2022-06-09 17:30:00 #####
+On branch master
+Your branch is ahead of 'origin/master' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   CSS_Study/Check/index.html
+	new file:   CSS_Study/Check/style.css
+	modified:   commit.sh.log
+
+[master 7cdd87d] PlayGround ~ 🌟
+ 3 files changed, 79 insertions(+)
+ create mode 100644 CSS_Study/Check/index.html
+ create mode 100644 CSS_Study/Check/style.css
+To github.com:JEONGHWANMIN/PlayGround.git
+   03623a5..7cdd87d  master -> master
+##### AUTO PUSH END #####
+##### PUSH START : 2022-06-10 17:30:01 #####
