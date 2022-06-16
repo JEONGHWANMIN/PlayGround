@@ -145,3 +145,23 @@ To github.com:JEONGHWANMIN/PlayGround.git
    0e6059d..e24c66e  master -> master
 ##### AUTO PUSH END #####
 ##### PUSH START : 2022-06-15 17:30:01 #####
+On branch master
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    CSS_Study/Check/style.css
+	renamed:    CSS_Study/Check/index.html -> CSS_Study/InputAnimation/index.html
+	new file:   CSS_Study/InputAnimation/style.css
+	modified:   commit.sh.log
+
+[master f8a764e] PlayGround ~ 🌟
+ 4 files changed, 77 insertions(+), 54 deletions(-)
+ delete mode 100644 CSS_Study/Check/style.css
+ rename CSS_Study/{Check => InputAnimation}/index.html (56%)
+ create mode 100644 CSS_Study/InputAnimation/style.css
+To github.com:JEONGHWANMIN/PlayGround.git
+   e24c66e..f8a764e  master -> master
+##### AUTO PUSH END #####
+##### PUSH START : 2022-06-16 17:30:01 #####
