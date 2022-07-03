@@ -333,3 +333,17 @@ To github.com:JEONGHWANMIN/PlayGround.git
    de2e14f..816c0cc  master -> master
 ##### AUTO PUSH END #####
 ##### PUSH START : 2022-07-01 17:30:00 #####
+On branch master
+Your branch is ahead of 'origin/master' by 21 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   commit.sh.log
+
+[master 7b317a3] PlayGround ~ 🌟
+ 1 file changed, 14 insertions(+)
+To github.com:JEONGHWANMIN/PlayGround.git
+   816c0cc..7b317a3  master -> master
+##### AUTO PUSH END #####
+##### PUSH START : 2022-07-03 17:30:01 #####
