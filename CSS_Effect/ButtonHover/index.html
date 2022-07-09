@@ -8,6 +8,29 @@
     <title>Document</title>
   </head>
   <body>
-    <button>I'm Button</button>
+    <button id="btn1">I'm Button</button>
+
+    <script>
+      const btn = document.querySelector('#btn1');
+      const onClick = (e) => {
+        const { x, y, width, height } = btn.getBoundingClientRect();
+        // button 크기가 들어있음 , 버튼 어디를 누르든 똑같은 결과 반환
+        console.log(x, y, width, height);
+        const radius = Math.sqrt(width * width + height * height);
+        btn.style.setProperty('--diameter', radius * 2 + 'px');
+
+        const { clientX, clientY } = e;
+        const left = ((clientX - x - radius) / width) * 100 + '%';
+        const top = ((clientY - y - radius) / height) * 100 + '%';
+
+        btn.style.setProperty('--left', left);
+        btn.style.setProperty('--top', top);
+        btn.style.setProperty('--a', '');
+        setTimeout(() => {
+          btn.style.setProperty('--a', 'ripple-effect 500ms linear');
+        });
+      };
+      btn.addEventListener('click', onClick);
+    </script>
   </body>
 </html>

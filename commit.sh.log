@@ -431,3 +431,28 @@ To github.com:JEONGHWANMIN/PlayGround.git
    bc8bf5e..6df4658  master -> master
 ##### AUTO PUSH END #####
 ##### PUSH START : 2022-07-09 17:30:01 #####
+On branch master
+Your branch is ahead of 'origin/master' by 28 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   CSS_Effect/ButtonHover/index.html
+	new file:   CSS_Effect/ButtonHover/style.css
+	renamed:    CSS_Study/InputAnimation/index.html -> CSS_Effect/InputAnimation/index.html
+	renamed:    CSS_Study/InputAnimation/style.css -> CSS_Effect/InputAnimation/style.css
+	renamed:    CSS_Study/RainBowText/index.html -> CSS_Effect/RainBowText/index.html
+	renamed:    CSS_Study/RainBowText/style.css -> CSS_Effect/RainBowText/style.css
+	modified:   commit.sh.log
+
+[master 8c556a1] PlayGround ~ 🌟
+ 7 files changed, 37 insertions(+)
+ create mode 100644 CSS_Effect/ButtonHover/index.html
+ create mode 100644 CSS_Effect/ButtonHover/style.css
+ rename {CSS_Study => CSS_Effect}/InputAnimation/index.html (100%)
+ rename {CSS_Study => CSS_Effect}/InputAnimation/style.css (100%)
+ rename {CSS_Study => CSS_Effect}/RainBowText/index.html (100%)
+ rename {CSS_Study => CSS_Effect}/RainBowText/style.css (100%)
+To github.com:JEONGHWANMIN/PlayGround.git
+   6df4658..8c556a1  master -> master
+##### AUTO PUSH END #####
