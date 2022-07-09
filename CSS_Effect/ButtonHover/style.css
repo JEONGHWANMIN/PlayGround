@@ -1,0 +1,10 @@
+button {
+  font-family: roboto;
+  letter-spacing: 1px;
+  padding: 1rem 5rem;
+  border-radius: 9px;
+  font-size: 1.5rem;
+  color: #eaeaea;
+  font-weight: bold;
+  background-color: #ff2e63;
+}
