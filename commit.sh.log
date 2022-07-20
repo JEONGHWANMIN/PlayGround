@@ -570,3 +570,19 @@ To github.com:JEONGHWANMIN/PlayGround.git
    a733afa..e1aa4d0  master -> master
 ##### AUTO PUSH END #####
 ##### PUSH START : 2022-07-19 17:30:00 #####
+On branch master
+Your branch is ahead of 'origin/master' by 8 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   commit.sh.log
+	new file:   test.js
+
+[master f510efa] PlayGround ~ 🌟
+ 2 files changed, 24 insertions(+)
+ create mode 100644 test.js
+To github.com:JEONGHWANMIN/PlayGround.git
+   e1aa4d0..f510efa  master -> master
+##### AUTO PUSH END #####
+##### PUSH START : 2022-07-20 17:30:00 #####
