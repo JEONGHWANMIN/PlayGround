@@ -342,3 +342,109 @@ async await 이란 ?
 //   .catch((error) => {
 //     console.log(error);
 //   });
+
+// ================================ Part4. Promise methods  ================================
+
+// Promise.all([])
+// 모든 프로미스가 fullfill 상태가 되면 종료된다.
+async function PromiseAll() {
+  const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise1");
+    }, 1000);
+  });
+  const promise2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2");
+    }, 3000);
+  });
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise3");
+    }, 10000);
+  });
+
+  const result = await Promise.all([promise1, promise2, promise3]);
+  console.log(result);
+  result.map((promise) => {
+    console.log(promise);
+  });
+}
+
+// 하지만 하나라도 Reject 된다면 프로미스가 종료된다.
+async function PromiseAllReject() {
+  const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject("실패1");
+    }, 1000);
+  });
+  const promise2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2");
+    }, 3000);
+  });
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise3");
+    }, 10000);
+  });
+
+  const result = await Promise.all([promise1, promise2, promise3]);
+  console.log(result);
+  result.map((promise) => {
+    console.log(promise);
+  });
+}
+
+// PromiseRace는 무조건 제일 빠른 프로미스를 반환한다.
+// 이때 제일 빠른 것이 반환해더라도 함수 실행은 계속 되어있다.
+// Promise.race도 Promise.all 과 똑같이 하나라도 reject되면 끝난다.
+async function PromiseRace() {
+  const promise2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2");
+    }, 3000);
+  });
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise3");
+    }, 10000);
+  });
+  const promise1 = new Promise((resolve, reject) => {
+    // reject("실패!");
+    setTimeout(() => {
+      resolve("내가 제일 빨라 !!");
+    }, 1000);
+  });
+  const fastPromise = await Promise.race([promise2, promise3, promise1]);
+  console.log(fastPromise);
+}
+
+// Promise.allSettled는 각각의 성공 및 실패 상태를 배열안에 객체로 리턴해 준다.
+// 성공하면 값이 뭔지 , 실패하면 이유가 뭔지 알려준다.
+/** 
+ [
+  { status: 'fulfilled', value: 'promise2 성공!!' },
+  { status: 'rejected', reason: 'promise3 실패!!' },
+  { status: 'rejected', reason: 'promise 1 실패' }
+]
+ */
+async function PromiseAllSettled() {
+  const promise2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2 성공!!");
+    }, 3000);
+  });
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject("promise3 실패!!");
+    }, 10000);
+  });
+  const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject("promise 1 실패");
+    }, 1000);
+  });
+  const fastPromise = await Promise.allSettled([promise2, promise3, promise1]);
+  console.log(fastPromise);
+}
