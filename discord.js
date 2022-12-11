@@ -1,10 +1,4 @@
 import Discord from "discord.js";
-import {
-  joinVoiceChannel,
-  createAudioPlayer,
-  NoSubscriberBehavior,
-  createAudioResource,
-} from "@discordjs/voice";
 import { TOKEN } from "./env.js";
 import { getLocalTemp } from "./crawller.js";
 import { Timer } from "./src/timer.js";
