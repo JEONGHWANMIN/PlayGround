@@ -1,10 +1,10 @@
 const a = [1, 2, 3, 4, 5];
 
-a.forEach((el, i) => {
+const as = a.forEach((el, i) => {
   a[i] = a[i] * 2;
 });
 
-console.log(a);
+console.log(as);
 
 const c = a.map((el) => el * 2);
-console.log(c);
+console.log(c === a);
