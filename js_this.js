@@ -1,10 +1,9 @@
-const a = [1, 2, 3, 4, 5];
+function Foo() {
+  console.log(this);
+}
 
-const as = a.forEach((el, i) => {
-  a[i] = a[i] * 2;
-});
+Foo(); // logs global object
 
-console.log(as);
+const bar = new Foo(); // logs Foo object
 
-const c = a.map((el) => el * 2);
-console.log(c === a);
+bar(); // TypeError: bar is not a function
