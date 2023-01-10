@@ -2,11 +2,15 @@
  * Omit<T>
  * 특정 타입을 제거할 떼 사용하는 유틸리티 타입
  * Exluce<T,U> : Omit 특정 타입을 제거할 떼 사용하는 유틸리티 타입
+ *  1. 특정 타입을 제거한 새로운 타입 반환
+ *  1-1. keyof T를 받아서 그 키값들이 U랑 같으면 never, 아니면 T타입 그대로 적용
+ *  2. Omit은 Pick을 이용하는데 Exclude타입으로 특정 타입을 제외한 타입을 받는다.
+ *  2-2. 특정 타입을 제외한 타입을 Pick을 사용해서 집어서 새로운 타입을 만든다.
  */
 
-// https://medium.com/@yujso66/%EB%B2%88%EC%97%AD-typescript%EC%9D%98-%EC%9C%A0%ED%8B%B8%EB%A6%AC%ED%8B%B0-%ED%83%80%EC%9E%85%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B5%AC%ED%98%84%EB%90%A0%EA%B9%8C%EC%9A%94-e80fbb33bf24
-// T가 U 상속받은 키값이면 never, 상속받은게 아니라면 T 그대로
 type Exclude<T, U> = T extends U ? never : T;
+
+type Omit1<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 
 interface Todo {
   id: number;
@@ -14,11 +18,13 @@ interface Todo {
   complete: boolean;
 }
 
-type TEST = Exclude<Todo, "title">;
+type NOTITLE = Exclude<keyof Todo, "title">;
+type NOID = Exclude<keyof Todo, "id">;
+type NOID_TITLE = Exclude<keyof Todo, "id" | "title">;
 
-let name: TEST;
+let name: Todo;
 
-type TodoPreview = Omit<Todo, "id">;
+type TodoPreview = Omit1<Todo, "id">;
 
 const todo1: TodoPreview = {
   title: "환민",
