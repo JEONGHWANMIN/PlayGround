@@ -12,3 +12,7 @@ console.log(iter.next());
 console.log(iter.next());
 console.log(iter.next());
 console.log(iter.next());
+
+for (let i of iter) {
+  console.log("여기도 돌까?", i);
+}
