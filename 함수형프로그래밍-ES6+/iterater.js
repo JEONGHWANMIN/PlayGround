@@ -25,5 +25,9 @@ log("==================");
 let iter = iterable[Symbol.iterator]();
 
 iter.next();
+iter.next();
+iter.next();
+iter.next();
+iter.next();
 
 for (let a of iter) log(a);
