@@ -14,4 +14,14 @@ function foo(obj) {
   return data;
 }
 
+function bar(obj) {
+  const map = {
+    1: "1",
+    2: "2",
+  };
+
+  return map[obj.type];
+}
+
 console.log(foo({ type: 2 }));
+console.log(bar({ type: 2 }));
