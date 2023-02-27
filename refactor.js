@@ -18,9 +18,10 @@ function bar(obj) {
   const map = {
     1: "1",
     2: "2",
+    default: "기본값",
   };
 
-  return map[obj.type];
+  return map[obj.type] ? map[obj.type] : map["default"];
 }
 
 console.log(foo({ type: 2 }));
