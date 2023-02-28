@@ -26,3 +26,4 @@ function bar(obj) {
 
 console.log(foo({ type: 2 }));
 console.log(bar({ type: 2 }));
+console.log(bar({ type: 1 }));
