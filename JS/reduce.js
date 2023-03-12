@@ -75,7 +75,7 @@ function geyById(id) {
   });
 }
 
-const ids = [10, 20, 30];
+const ids = [10, 20, 30, 40, 50];
 
 ids.reduce(async (promise, id) => {
   await promise;
