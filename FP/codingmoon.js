@@ -58,3 +58,49 @@ const range = (start, stop) => {
 };
 
 log(range(1, 10));
+
+// ------------------------------------------------------
+
+const arr3 = [1, 2, 3, 4, 5];
+
+const isEven = (n) => n % 2 === 0;
+
+const evenNums = arr3.filter(isEven);
+
+console.log(evenNums);
+
+const values = [1, "", 2, undefined, 3, 4];
+
+const filterd = values.filter((value) => Boolean(value));
+
+log(filterd);
+
+const users = [
+  {
+    name: "hwan",
+    age: 24,
+    gender: "male",
+  },
+  {
+    name: "hwan5",
+    age: 30,
+    gender: "female",
+  },
+  {
+    name: "hwan1",
+    age: 27,
+    gender: "male",
+  },
+  {
+    name: "hwa6n",
+    age: 35,
+    gender: "female",
+  },
+];
+
+const olderThan30 = (user) => user.age >= 30;
+const isFemale = (user) => user.gender === "female";
+
+const result3 = users.filter(olderThan30).filter(isFemale);
+
+log(result3);
