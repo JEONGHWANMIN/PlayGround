@@ -104,3 +104,13 @@ const isFemale = (user) => user.gender === "female";
 const result3 = users.filter(olderThan30).filter(isFemale);
 
 log(result3);
+
+const byProperty = (prop, fn) => {
+  return (user) => {
+    return user.hasOwnProperty(prop) && fn(user[prop]);
+  };
+};
+
+const result4 = users.filter(byProperty("age", (age) => age >= 30));
+
+log(result4);
