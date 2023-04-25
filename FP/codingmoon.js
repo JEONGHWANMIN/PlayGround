@@ -114,3 +114,5 @@ const byProperty = (prop, fn) => {
 const result4 = users.filter(byProperty("age", (age) => age >= 30));
 
 log(result4);
+
+// ------------------------------------------------------
