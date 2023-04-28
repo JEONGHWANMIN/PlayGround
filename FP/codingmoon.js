@@ -116,3 +116,31 @@ const result4 = users.filter(byProperty("age", (age) => age >= 30));
 log(result4);
 
 // ------------------------------------------------------
+
+function FnC(x, y) {
+  return x + y;
+}
+
+function CarriedFn(x) {
+  return function (y) {
+    return x + y;
+  };
+}
+
+log(FnC(1, 2));
+log(CarriedFn(1)(2));
+
+function makeCoffee(roastType) {
+  return function (sugar) {
+    return function (cream) {
+      log(`Coffee ${roastType} ${sugar} ${cream}`);
+    };
+  };
+}
+
+log(makeCoffee("DarkLost")(1)(2));
+
+const mediumLost = makeCoffee("mediumLost");
+
+log(mediumLost(1)(2));
+log(mediumLost(3)(5));
