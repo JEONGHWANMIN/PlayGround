@@ -144,3 +144,35 @@ const mediumLost = makeCoffee("mediumLost");
 
 log(mediumLost(1)(2));
 log(mediumLost(3)(5));
+
+// -----
+
+const title = "Learning Function Composition 1";
+
+const strToArr = (str) => str.split(" ");
+const toLower = (arr) => arr.map((w) => w.toLowerCase());
+const joinWithDash = (arr) => arr.join("-");
+
+const slug1 = joinWithDash(toLower(strToArr(title)));
+
+log(slug1);
+
+const compose =
+  (...fns) =>
+  (input) => {
+    return fns.reduceRight((acc, fn) => fn(acc), input);
+  };
+
+const pipeline =
+  (input) =>
+  (...fns) => {
+    return fns.reduce((acc, fn) => fn(acc), input);
+  };
+
+const slug2 = compose(joinWithDash, toLower, strToArr)(title);
+
+log(slug2);
+
+const slug3 = pipeline(title)(strToArr, toLower, joinWithDash);
+
+log(slug3);
