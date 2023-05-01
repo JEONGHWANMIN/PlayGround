@@ -176,3 +176,6 @@ log(slug2);
 const slug3 = pipeline(title)(strToArr, toLower, joinWithDash);
 
 log(slug3);
+
+console.log(slug1 === slug2);
+console.log(slug1 === slug3);
