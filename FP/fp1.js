@@ -11,3 +11,5 @@ go1(10, log);
 go1(delay(2000, 50), log);
 
 delay(2000, 50).then(log);
+
+delay(3000, 40);
