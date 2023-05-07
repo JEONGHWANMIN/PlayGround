@@ -6,4 +6,7 @@ const curry =
 
 const mult = curry((a, b) => a * b);
 
+console.log(mult(2, 5));
+console.log(mult(2));
+console.log(mult(2)(5));
 console.log(mult(2)(5));
