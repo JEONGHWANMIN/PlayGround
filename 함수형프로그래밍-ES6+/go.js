@@ -45,7 +45,6 @@ const res = reduce(
 );
 
 const go = (...args) => {
-  console.log(args);
   return reduce((acc, f) => f(acc), args);
 };
 
@@ -58,7 +57,7 @@ go(
 );
 
 const pipe = (...fs) => {
-  return (a) => go(a, fs);
+  return (a) => go(a, ...fs);
 };
 
 console.log("[-------]");
@@ -70,7 +69,7 @@ go(
   console.log
 );
 
-console.log("[-------]");
+console.log("[----123---]");
 
 const pp1 = pipe(
   (products) => filter((p) => p.price <= 20000, products),
@@ -79,4 +78,4 @@ const pp1 = pipe(
   console.log
 );
 
-console.log("11", pp1(products));
+pp1(products);
