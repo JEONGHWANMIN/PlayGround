@@ -4,7 +4,6 @@ const curry = (f) => {
       return f(a, ...args);
     } else {
       return (...rest) => {
-        console.log("Rest", rest);
         return f(a, ...rest);
       };
     }
