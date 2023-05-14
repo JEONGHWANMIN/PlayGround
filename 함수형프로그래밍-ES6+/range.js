@@ -94,4 +94,9 @@ L.map = function* (f, iter) {
 
 const it = L.map((item) => item + 1, [1, 2, 3]);
 
-log([...it]);
+// log([...it]);
+// log(it);
+log(it.next());
+log(it.next());
+log(it.next());
+log(it.next());
