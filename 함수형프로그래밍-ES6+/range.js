@@ -100,3 +100,13 @@ log(it.next());
 log(it.next());
 log(it.next());
 log(it.next());
+
+// L.Filter
+
+L.filter = function* (f, iter) {
+  for (let a of iter) {
+    if (f(a)) yield a;
+  }
+};
+
+go(L.range(20), take(5), (iter) => L.filter((a) => a < 2, iter), log);
