@@ -109,4 +109,9 @@ L.filter = function* (f, iter) {
   }
 };
 
-go(L.range(20), take(5), (iter) => L.filter((a) => a < 2, iter), log);
+go(
+  L.range(20),
+  take(5),
+  (iter) => L.filter((a) => a < 2, iter),
+  (filtered) => take(filtered)
+);
