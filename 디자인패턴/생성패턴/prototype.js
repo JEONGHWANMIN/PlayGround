@@ -56,10 +56,10 @@ const subPanda1 = new SubPanda("서브판다"); // __proto__
 
 console.log(subPanda1.bark2());
 
-// console.log(panda1.bark());
+console.log(panda1.bark());
 
-// console.log(Panda.prototype);
-// console.log(panda1.__proto__);
+console.log(Panda.prototype);
+console.log(panda1.__proto__);
 
 const a = [];
 
