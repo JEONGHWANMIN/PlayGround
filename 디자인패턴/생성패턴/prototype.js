@@ -66,3 +66,9 @@ const a = [];
 Array.prototype.hwanmin = () => console.log("먕먕");
 
 a.hwanmin();
+
+/**
+ * 주의: Object.prototype.__proto__는 오늘날 대부분의 브라우저에서 지원되지만,
+ * 그 존재와 정확한 동작은 오직 웹 브라우저와의 호환성을 보장하기 위한 레거시 기능으로서 ECMAScript 2015 사양에서 비로소 표준화되었습니다.
+ * 더 나은 지원을 위해 대신 Object.getPrototypeOf()를 사용하세요.
+ */
