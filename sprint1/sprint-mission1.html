@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head style="font-family: Poppins, 'Noto Sans KR', sans-serif">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>판다마켓</title>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header>
+      <div class="header_left_box">
+        <img src="./image/panda_logo.svg" alt="로고이미지" />
+        <h3 class="header_logo_title">판다마켓</h3>
+      </div>
+      <a class="header_login_button" href="./pages/login.html">로그인</a>
+    </header>
+    <!-- 배너 -->
+    <div class="banner_box">
+      <div class="banner_text_box">
+        <h1 class="banner_main_text">일상의 모든 물건을<br />거래해 보세요</h1>
+        <a class="banner_watch_button" href="">구경하러 가기</a>
+      </div>
+      <img src="./image/panda_banner.png" alt="배너이미지" />
+    </div>
+    <!-- 메인 -->
+    <main class="main_box" id="mainContent">
+      <!-- <div class="main_item_box">
+        <img src="./image/main1.svg" alt="" />
+        <div class="main_text_box">
+          <p class="main_tag_text">Hot item</p>
+          <h3 class="main_text">인기 상품을<br />확인해 보세요</h3>
+          <p class="main_description_text">
+            가장 HOT한 중고거래 물품을<br />판다 마켓에서 확인해 보세요
+          </p>
+        </div>
+      </div>
+      <div class="main_item_box">
+        <img src="./image/main2.svg" alt="" />
+        <div class="main_text_box">
+          <p class="main_tag_text">Search</p>
+          <h3 class="main_text">구매를을<br />확인해 보세요</h3>
+          <p class="main_description_text">
+            가장 HOT한 중고거래 물품을<br />판다 마켓에서 확인해 보세요
+          </p>
+        </div>
+      </div>
+      <div class="main_item_box">
+        <img src="./image/main3.svg" alt="" />
+        <div class="main_text_box">
+          <p class="main_tag_text">Register</p>
+          <h3 class="main_text">인기 상품을<br />확인해 보세요</h3>
+          <p class="main_description_text">
+            가장 HOT한 중고거래 물품을<br />판다 마켓에서 확인해 보세요
+          </p>
+        </div>
+      </div> -->
+    </main>
+    <!-- 바텀 배너 -->
+    <div></div>
+    <!-- 푸터 -->
+    <footer></footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the mainContent element
+        const mainContent = document.getElementById("mainContent");
+
+        // Define the content structure
+        const contentData = [
+          {
+            imgUrl: "./image/main1.svg",
+            tagText: "Hot item",
+            mainText: "인기 상품을<br />확인해 보세요",
+            descriptionText:
+              "가장 HOT한 중고거래 물품을<br />판다 마켓에서 확인해 보세요",
+          },
+          {
+            imgUrl: "./image/main2.svg",
+            tagText: "Search",
+            mainText: "구매를 원하는<br/>상품을 찾아보세요.",
+            descriptionText:
+              "구매하고 싶은 물품은 검색해서<br/>쉽게 찾아보세요",
+          },
+          {
+            imgUrl: "./image/main3.svg",
+            tagText: "Register",
+            mainText: "판매를 원하는 <br/>상품을 등록하세요",
+            descriptionText:
+              "어떤 물건이든 판매하고 싶은 상품을<br/>쉽게 등록하세요",
+          },
+          // Add more content data as needed
+        ];
+
+        // Loop through contentData and create elements
+        contentData.forEach((data) => {
+          // Create main_item_box element
+          const mainItemBox = document.createElement("div");
+          mainItemBox.classList.add("main_item_box");
+
+          // Create img element
+          const img = document.createElement("img");
+          img.src = data.imgUrl;
+          img.alt = "";
+
+          // Create main_text_box element
+          const mainTextBox = document.createElement("div");
+          mainTextBox.classList.add("main_text_box");
+
+          // Create p elements for tag text, main text, and description text
+          const tagText = document.createElement("p");
+          tagText.classList.add("main_tag_text");
+          tagText.innerHTML = data.tagText;
+
+          const mainText = document.createElement("h3");
+          mainText.classList.add("main_text");
+          mainText.innerHTML = data.mainText;
+
+          const descriptionText = document.createElement("p");
+          descriptionText.classList.add("main_description_text");
+          descriptionText.innerHTML = data.descriptionText;
+
+          // Append elements to mainItemBox and mainTextBox
+          mainItemBox.appendChild(img);
+          mainItemBox.appendChild(mainTextBox);
+          mainTextBox.appendChild(tagText);
+          mainTextBox.appendChild(mainText);
+          mainTextBox.appendChild(descriptionText);
+
+          // Append mainItemBox to mainContent
+          mainContent.appendChild(mainItemBox);
+        });
+      });
+    </script>
+  </body>
+</html>

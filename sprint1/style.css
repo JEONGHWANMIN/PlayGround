@@ -1,0 +1,129 @@
+:root {
+  --primary-color: #3692ff;
+  --secondary-color: #cfe5ff;
+  --text-color: #374151;
+  --button-text-color: white;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* header */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 200px;
+}
+
+.header_left_box {
+  display: flex;
+  align-items: center;
+  gap: 8.6px;
+}
+
+.header_logo_title {
+  font-size: 25.63px;
+  font-weight: 700;
+  line-height: 34.6px;
+  color: var(--primary-color);
+}
+
+.header_login_button {
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  font-weight: 600;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+}
+
+/* banner */
+
+.banner_box {
+  max-width: 1980px;
+  background-color: #cfe5ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner_text_box {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.banner_main_text {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 56px;
+  color: #374151;
+}
+
+.banner_watch_button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px 123px;
+  text-decoration: none;
+  border-radius: 40px;
+}
+
+/* main */
+
+.main_box {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 276px;
+  margin-top: 137px;
+}
+
+.main_item_box {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+}
+
+.main_item_box:nth-child(even) {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.main_text_box {
+  display: flex;
+  flex-direction: column;
+}
+
+.main_text_box:nth-child(odd) {
+  background-color: red;
+}
+
+.main_tag_text {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25.2px;
+  color: var(--primary-color);
+}
+
+.main_text {
+  color: var(--text-color);
+  line-height: 56px;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 2%;
+  margin-top: 12px;
+}
+
+.main_description_text {
+  color: var(--text-color);
+  line-height: 28.8px;
+  font-size: 24px;
+  letter-spacing: 8%;
+  font-weight: 500;
+  margin-top: 24px;
+}
