@@ -28,3 +28,24 @@ class TV extends Product {
 const tv1 = new TV("환민티비", -2000, "25inch");
 
 console.log(tv1);
+
+const invisible = document.querySelector(img[(id = "togglePassword")]);
+let isEyeIconVisible = false;
+
+const invisibleToggle = (e) => {
+  isEyeIconVisible = !isEyeIconVisible;
+  changePasswordIcon(isEyeIconVisible);
+  changePasswordFieldType(isEyeIconVisible);
+};
+
+const changePasswordIcon = (isPasswordVisible) => {
+  const imageSrc = isPasswordVisible ? "visible" : "invisible";
+  e.target.setAttribute("src", `./image/icon/${imageSrc}.svg`);
+};
+
+const changePasswordFieldType = (isPasswordVisible) => {
+  const passwordField = document.querySelector('input[type="password"]');
+  passwordField.type = isPasswordVisible ? "text" : "password";
+};
+
+invisible.addEventListener("click", invisibleToggle);

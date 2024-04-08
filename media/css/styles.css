@@ -25,3 +25,13 @@ html {
 .test2 {
   font-size: 2.4rem;
 }
+
+.email_input {
+  position: relative;
+}
+
+.eye_icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
