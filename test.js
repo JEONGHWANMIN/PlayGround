@@ -1,20 +1,80 @@
-// 클로저 개념
-// 실행 컨텍스트 -> 코드 실행하기 전에 환경을 수집
-// 스코프 체이닝
+// // function* Generator() {
+// //   yield 1;
+// //   yield 2;
+// //   yield 3;
+// // }
 
-function Outer() {
-  const name = "외부 환민";
+// // const generator = Generator();
 
-  return function Inner() {
-    const name = "내부 환민";
-    console.log("name", name);
-  };
+// // console.log(generator.next());
+// // console.log("다른 작업 1");
+// // console.log(generator.next());
+// // console.log("다른 작업 2");
+// // console.log(generator.next());
+// // console.log("다른 작업 3");
+// // console.log(generator.next());
+
+// const a = [1, 2, 3];
+
+// const iterator = a[Symbol.iterator]();
+
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+
+// const test = {
+//   [Symbol.iterator]: function () {
+//     let i = 0;
+//     return {
+//       next: function () {
+//         if (i > 5) {
+//           return { value: undefined, done: true };
+//         }
+//         return { value: i++, done: false };
+//       },
+//     };
+//   },
+// };
+
+// console.log(test);
+
+// // const iter = test[Symbol.iterator]();
+
+// for (const i of test) {
+//   console.log(i);
+// }
+
+// console.log([...test]);
+
+const a = [1, 2, 3, 4, 5];
+
+for (const i of a) {
+  console.log(i);
 }
 
-const name = "환민2";
+a[Symbol.iterator] = function () {
+  let i = 100;
+  return {
+    next: function () {
+      if (i < 5) {
+        return { value: undefined, done: true };
+      }
+      return { value: i--, done: false };
+    },
+  };
+};
 
-const Inner = Outer();
+const iter = a[Symbol.iterator]();
 
-Inner();
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
 
-// Inner -> 내부에 변수가 뭐 있는지, 외부에 뭐가 있는지 수집 완료, -> 외부에 뭐있
+for (const i of a) {
+  console.log(i);
+}
