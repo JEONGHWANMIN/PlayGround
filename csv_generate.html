@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>데이터 생성기</title>
+    <style>
+      body {
+        font-family: "Malgun Gothic", sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .container {
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .preview-container {
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .option-group {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 10px;
+        background-color: #fff;
+      }
+      .radio-group {
+        margin-top: 10px;
+      }
+      .radio-group input[type="radio"] {
+        width: auto;
+        margin-right: 10px;
+      }
+      .radio-group label {
+        display: inline;
+        font-weight: normal;
+      }
+      .win-no-options {
+        margin-top: 10px;
+        padding-left: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+        margin-top: 5px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-family: "Malgun Gothic", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Excel 데이터 생성기</h1>
+
+      <div class="option-group">
+        <label>WIN_NO 생성 방식:</label>
+        <div class="radio-group">
+          <input type="radio" id="sequential" name="winNoType" checked />
+          <label for="sequential">순차 번호 (1, 2, 3, ...)</label>
+        </div>
+        <div class="win-no-options" id="sequentialOptions">
+          <label for="startNumber">시작 번호:</label>
+          <input type="number" id="startNumber" value="1" min="1" />
+        </div>
+
+        <div class="radio-group">
+          <input type="radio" id="prefix" name="winNoType" />
+          <label for="prefix"
+            >접두사 + 순차 번호 (예: WIN001, WIN002, ...)</label
+          >
+        </div>
+        <div class="win-no-options" id="prefixOptions" style="display: none">
+          <label for="prefixText">접두사:</label>
+          <input type="text" id="prefixText" placeholder="예: WIN" />
+          <label for="digitCount">순차 번호 자릿수:</label>
+          <input type="number" id="digitCount" value="3" min="1" max="10" />
+        </div>
+
+        <div class="radio-group">
+          <input type="radio" id="custom" name="winNoType" />
+          <label for="custom">직접 입력 (줄바꿈으로 구분)</label>
+        </div>
+        <div class="win-no-options" id="customOptions" style="display: none">
+          <textarea
+            id="customValues"
+            placeholder="각 줄에 하나의 WIN_NO 값을 입력하세요. 예:&#10;WIN123&#10;WIN124&#10;WIN125"
+          ></textarea>
+        </div>
+      </div>
+
+      <label for="event_no">EVENT_NO 값:</label>
+      <input type="text" id="event_no" placeholder="EVENT_NO 값 입력" />
+
+      <label for="reward_nm">REWARD_NM 값:</label>
+      <input type="text" id="reward_nm" placeholder="REWARD_NM 값 입력" />
+
+      <label for="reward_cd">REWARD_CD 값:</label>
+      <input type="text" id="reward_cd" placeholder="REWARD_CD 값 입력" />
+
+      <label for="use_yn">USE_YN 값:</label>
+      <select id="use_yn">
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+      </select>
+
+      <label for="rowCount">생성할 행 수:</label>
+      <input
+        type="number"
+        id="rowCount"
+        placeholder="생성할 데이터 행 수"
+        min="1"
+        value="10"
+      />
+
+      <button onclick="generateData()">데이터 생성 미리보기</button>
+      <button onclick="downloadCSV()" id="downloadBtn" disabled>
+        CSV 다운로드
+      </button>
+
+      <div
+        class="preview-container"
+        id="previewContainer"
+        style="display: none"
+      >
+        <table id="previewTable">
+          <thead>
+            <tr>
+              <th>EVENT_NO</th>
+              <th>WIN_NO</th>
+              <th>REWARD_NM</th>
+              <th>REWARD_CD</th>
+              <th>USE_YN</th>
+            </tr>
+          </thead>
+          <tbody id="previewTableBody">
+            <!-- 데이터가 여기에 동적으로 추가됩니다 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      let generatedData = [];
+
+      // 라디오 버튼 변경 이벤트 처리
+      document.querySelectorAll('input[name="winNoType"]').forEach((radio) => {
+        radio.addEventListener("change", function () {
+          document.getElementById("sequentialOptions").style.display =
+            document.getElementById("sequential").checked ? "block" : "none";
+          document.getElementById("prefixOptions").style.display =
+            document.getElementById("prefix").checked ? "block" : "none";
+          document.getElementById("customOptions").style.display =
+            document.getElementById("custom").checked ? "block" : "none";
+        });
+      });
+
+      function generateWinNumbers(count) {
+        let winNumbers = [];
+
+        // 순차 번호 생성
+        if (document.getElementById("sequential").checked) {
+          const startNumber = parseInt(
+            document.getElementById("startNumber").value || 1
+          );
+          for (let i = 0; i < count; i++) {
+            winNumbers.push(String(startNumber + i));
+          }
+        }
+        // 접두사 + 순차 번호 생성
+        else if (document.getElementById("prefix").checked) {
+          const prefix = document.getElementById("prefixText").value || "";
+          const digitCount = parseInt(
+            document.getElementById("digitCount").value || 3
+          );
+          for (let i = 0; i < count; i++) {
+            const num = (i + 1).toString().padStart(digitCount, "0");
+            winNumbers.push(prefix + num);
+          }
+        }
+        // 직접 입력한 값 사용
+        else if (document.getElementById("custom").checked) {
+          const customValues = document.getElementById("customValues").value;
+          winNumbers = customValues
+            .split("\n")
+            .filter((value) => value.trim() !== "");
+
+          // 입력된 값이 부족하면 경고
+          if (winNumbers.length < count) {
+            alert(
+              `입력한 WIN_NO 값이 ${winNumbers.length}개로 필요한 ${count}개보다 적습니다. 가능한 만큼만 생성합니다.`
+            );
+          }
+          // 입력된 값이 더 많으면 필요한 만큼만 사용
+          else if (winNumbers.length > count) {
+            winNumbers = winNumbers.slice(0, count);
+          }
+        }
+
+        return winNumbers;
+      }
+
+      function generateData() {
+        const rowCount = parseInt(document.getElementById("rowCount").value);
+        const eventNo = document.getElementById("event_no").value;
+        const rewardNm = document.getElementById("reward_nm").value;
+        const rewardCd = document.getElementById("reward_cd").value;
+        const useYn = document.getElementById("use_yn").value;
+
+        if (!rowCount || !eventNo || !rewardNm || !rewardCd) {
+          alert("모든 필수 필드를 입력해주세요.");
+          return;
+        }
+
+        // WIN_NO 값 생성
+        const winNumbers = generateWinNumbers(rowCount);
+        const actualCount = Math.min(rowCount, winNumbers.length);
+
+        generatedData = [];
+        const tableBody = document.getElementById("previewTableBody");
+        tableBody.innerHTML = "";
+
+        for (let i = 0; i < actualCount; i++) {
+          const row = {
+            EVENT_NO: eventNo,
+            WIN_NO: winNumbers[i],
+            REWARD_NM: rewardNm,
+            REWARD_CD: rewardCd,
+            USE_YN: useYn,
+          };
+          generatedData.push(row);
+
+          // 미리보기에 추가
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+                    <td>${row.EVENT_NO}</td>
+                    <td>${row.WIN_NO}</td>
+                    <td>${row.REWARD_NM}</td>
+                    <td>${row.REWARD_CD}</td>
+                    <td>${row.USE_YN}</td>
+                `;
+          tableBody.appendChild(tr);
+        }
+
+        document.getElementById("previewContainer").style.display = "block";
+        document.getElementById("downloadBtn").disabled = false;
+      }
+
+      function downloadCSV() {
+        if (generatedData.length === 0) {
+          alert("먼저 데이터를 생성해주세요.");
+          return;
+        }
+
+        // CSV 헤더
+        let csv = "EVENT_NO,WIN_NO,REWARD_NM,REWARD_CD,USE_YN\n";
+
+        // 데이터 행 추가
+        generatedData.forEach((row) => {
+          csv += `${row.EVENT_NO},${row.WIN_NO},${row.REWARD_NM},${row.REWARD_CD},${row.USE_YN}\n`;
+        });
+
+        // CSV 파일 다운로드
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "generated_data.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>

@@ -10,6 +10,10 @@ try {
   else message = String(error);
   // we'll proceed, but let's report it
   reportError({ message });
-}     
+}
 
 export {};
+
+function createUser({ name, age }: { name: string; age: number }) {
+  return { name, age };
+}
