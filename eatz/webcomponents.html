@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>웹 컴포넌트 플레이그라운드</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .header {
+        background: white;
+        padding: 24px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        padding: 12px 24px;
+        background: white;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .tab:hover {
+        border-color: #007bff;
+      }
+
+      .tab.active {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      .main {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 20px;
+      }
+
+      .controls {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        height: fit-content;
+      }
+
+      .control {
+        margin-bottom: 16px;
+      }
+
+      .control label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+      }
+
+      .control input,
+      .control textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .preview {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .preview-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+      }
+
+      .view-btn {
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        background: white;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .view-btn.active {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      .preview-content {
+        padding: 40px;
+        min-height: 300px;
+      }
+
+      .code-view {
+        display: none;
+        padding: 20px;
+        background: #f8f9fa;
+      }
+
+      .docs-view {
+        display: none;
+        padding: 20px;
+      }
+
+      .docs-view h3 {
+        color: #333;
+        margin-bottom: 16px;
+      }
+
+      .docs-view .description {
+        background: #f0fff4;
+        border: 1px solid #9ae6b4;
+        padding: 16px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+      }
+
+      .docs-view .prop-item {
+        margin-bottom: 16px;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 6px;
+      }
+
+      .docs-view .prop-name {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .docs-view .prop-type {
+        color: #666;
+        font-style: italic;
+        font-size: 0.9em;
+      }
+
+      .docs-view .prop-desc {
+        margin-top: 4px;
+        color: #555;
+      }
+
+      .code-view pre {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+
+      @media (max-width: 768px) {
+        .main {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>웹 컴포넌트 플레이그라운드</h1>
+        <p>웹 컴포넌트를 실시간으로 테스트해보세요</p>
+      </div>
+
+      <div class="tabs" id="tabs"></div>
+
+      <div class="main">
+        <div class="controls">
+          <h3>속성 설정</h3>
+          <div id="controls-container"></div>
+        </div>
+
+        <div class="preview">
+          <div class="preview-header">
+            <button class="view-btn active" data-view="component">
+              미리보기
+            </button>
+            <button class="view-btn" data-view="code">코드</button>
+            <button class="view-btn" data-view="docs">문서</button>
+          </div>
+
+          <div class="preview-content">
+            <div id="component-view"></div>
+            <div class="code-view" id="code-view">
+              <pre id="html-code"></pre>
+            </div>
+            <div class="docs-view" id="docs-view" style="display: none">
+              <div id="docs-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 웹 컴포넌트 정의 -->
+    <script>
+      // ProductCard 컴포넌트
+      class ProductCard extends HTMLElement {
+        constructor() {
+          super();
+          this.attachShadow({ mode: "open" });
+        }
+
+        connectedCallback() {
+          this.render();
+        }
+
+        static get observedAttributes() {
+          return ["name", "price", "image"];
+        }
+
+        attributeChangedCallback() {
+          if (this.shadowRoot) this.render();
+        }
+
+        render() {
+          const name = this.getAttribute("name") || "상품명";
+          const price = this.getAttribute("price") || "0";
+          const image =
+            this.getAttribute("image") || "/api/placeholder/150/150";
+
+          this.shadowRoot.innerHTML = `
+          <style>
+            .card {
+              display: inline-block;
+              width: 150px;
+              background: white;
+              border: 1px solid #eee;
+              border-radius: 8px;
+              overflow: hidden;
+              box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .image {
+              width: 100%;
+              height: 150px;
+              object-fit: cover;
+            }
+            .content {
+              padding: 12px;
+            }
+            .name {
+              font-weight: 500;
+              margin-bottom: 8px;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+            .price {
+              color: #007bff;
+              font-weight: 600;
+            }
+          </style>
+          <div class="card">
+            <img class="image" src="${image}" alt="${name}">
+            <div class="content">
+              <div class="name">${name}</div>
+              <div class="price">${Number(price).toLocaleString()}원</div>
+            </div>
+          </div>
+        `;
+        }
+      }
+
+      // SectionTitle 컴포넌트
+      class SectionTitle extends HTMLElement {
+        constructor() {
+          super();
+          this.attachShadow({ mode: "open" });
+        }
+
+        connectedCallback() {
+          this.render();
+        }
+
+        static get observedAttributes() {
+          return ["title", "subtitle"];
+        }
+
+        attributeChangedCallback() {
+          if (this.shadowRoot) this.render();
+        }
+
+        render() {
+          const title = this.getAttribute("title") || "제목";
+          const subtitle = this.getAttribute("subtitle") || "";
+
+          this.shadowRoot.innerHTML = `
+          <style>
+            .container {
+              margin: 20px 0;
+            }
+            .title {
+              font-size: 24px;
+              font-weight: 600;
+              color: #333;
+              margin: 0;
+            }
+            .subtitle {
+              font-size: 14px;
+              color: #666;
+              margin-top: 4px;
+            }
+          </style>
+          <div class="container">
+            <h2 class="title">${title}</h2>
+            ${subtitle ? `<p class="subtitle">${subtitle}</p>` : ""}
+          </div>
+        `;
+        }
+      }
+
+      // 컴포넌트 등록
+      customElements.define("product-card", ProductCard);
+      customElements.define("section-title", SectionTitle);
+
+      // 플레이그라운드 로직
+      const components = {
+        "product-card": {
+          name: "상품 카드",
+          description:
+            "상품의 이미지, 이름, 가격을 표시하는 카드형 컴포넌트입니다.",
+          props: [
+            {
+              name: "name",
+              label: "상품명",
+              type: "text",
+              default: "무선 헤드폰",
+              description: "표시할 상품의 이름",
+            },
+            {
+              name: "price",
+              label: "가격",
+              type: "number",
+              default: "99000",
+              description: "상품 가격 (숫자만 입력)",
+            },
+            {
+              name: "image",
+              label: "이미지 URL",
+              type: "text",
+              default: "/api/placeholder/150/150",
+              description: "상품 이미지의 URL 주소",
+            },
+          ],
+        },
+        "section-title": {
+          name: "섹션 제목",
+          description: "페이지 섹션의 제목과 부제목을 표시하는 컴포넌트입니다.",
+          props: [
+            {
+              name: "title",
+              label: "제목",
+              type: "text",
+              default: "인기 상품",
+              description: "메인 제목 텍스트",
+            },
+            {
+              name: "subtitle",
+              label: "부제목",
+              type: "text",
+              default: "오늘의 추천",
+              description: "부제목 텍스트 (선택사항)",
+            },
+          ],
+        },
+      };
+
+      let currentComponent = "product-card";
+
+      function createTabs() {
+        const tabs = document.getElementById("tabs");
+        tabs.innerHTML = "";
+
+        Object.entries(components).forEach(([key, component]) => {
+          const tab = document.createElement("div");
+          tab.className = `tab ${key === currentComponent ? "active" : ""}`;
+          tab.textContent = component.name;
+          tab.onclick = () => selectComponent(key);
+          tabs.appendChild(tab);
+        });
+      }
+
+      function selectComponent(key) {
+        currentComponent = key;
+
+        // 탭 업데이트
+        document
+          .querySelectorAll(".tab")
+          .forEach((tab) => tab.classList.remove("active"));
+
+        // 현재 선택된 탭 찾기
+        document.querySelectorAll(".tab").forEach((tab) => {
+          if (tab.textContent === components[key].name) {
+            tab.classList.add("active");
+          }
+        });
+
+        createControls();
+        renderComponent();
+        updateCode();
+        updateDocs();
+      }
+
+      function createControls() {
+        const container = document.getElementById("controls-container");
+        container.innerHTML = "";
+
+        components[currentComponent].props.forEach((prop) => {
+          const div = document.createElement("div");
+          div.className = "control";
+
+          const label = document.createElement("label");
+          label.textContent = prop.label;
+          div.appendChild(label);
+
+          const input = document.createElement("input");
+          input.type = prop.type;
+          input.value = prop.default;
+          input.oninput = updateComponent;
+          input.dataset.prop = prop.name;
+          div.appendChild(input);
+
+          container.appendChild(div);
+        });
+      }
+
+      function renderComponent() {
+        const view = document.getElementById("component-view");
+        view.innerHTML = "";
+
+        const element = document.createElement(currentComponent);
+
+        // 기본값 적용
+        components[currentComponent].props.forEach((prop) => {
+          element.setAttribute(prop.name, prop.default);
+        });
+
+        view.appendChild(element);
+      }
+
+      function updateComponent() {
+        const element = document.querySelector(
+          `#component-view ${currentComponent}`
+        );
+        if (!element) return;
+
+        const inputs = document.querySelectorAll("#controls-container input");
+        inputs.forEach((input) => {
+          if (input.dataset.prop) {
+            element.setAttribute(input.dataset.prop, input.value);
+          }
+        });
+
+        updateCode();
+      }
+
+      function updateCode() {
+        const element = document.querySelector(
+          `#component-view ${currentComponent}`
+        );
+        if (!element) return;
+
+        const attrs = Array.from(element.attributes)
+          .filter((attr) => attr.value && !["id", "class"].includes(attr.name))
+          .map((attr) => `${attr.name}="${attr.value}"`)
+          .join(" ");
+
+        const html = `<${currentComponent}${
+          attrs ? " " + attrs : ""
+        }></${currentComponent}>`;
+        const codeElement = document.getElementById("html-code");
+        if (codeElement) {
+          codeElement.textContent = html;
+        }
+      }
+
+      function updateDocs() {
+        const component = components[currentComponent];
+        const docsContent = document.getElementById("docs-content");
+
+        if (!docsContent) return;
+
+        let propsHTML = "";
+        component.props.forEach((prop) => {
+          propsHTML += `
+          <div class="prop-item">
+            <div class="prop-name">${prop.name} <span class="prop-type">(${prop.type})</span></div>
+            <div class="prop-desc">${prop.description}</div>
+          </div>
+        `;
+        });
+
+        docsContent.innerHTML = `
+        <h3>${component.name}</h3>
+        <div class="description">
+          <p>${component.description}</p>
+        </div>
+        <h4>속성 (Properties)</h4>
+        ${propsHTML}
+      `;
+      }
+
+      // 뷰 전환
+      document.querySelectorAll(".view-btn").forEach((btn) => {
+        btn.onclick = () => {
+          document
+            .querySelectorAll(".view-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const view = btn.dataset.view;
+          document.getElementById("component-view").style.display =
+            view === "component" ? "block" : "none";
+          document.getElementById("code-view").style.display =
+            view === "code" ? "block" : "none";
+          document.getElementById("docs-view").style.display =
+            view === "docs" ? "block" : "none";
+
+          if (view === "docs") {
+            updateDocs();
+          }
+        };
+      });
+
+      // 초기화
+      window.addEventListener("DOMContentLoaded", () => {
+        try {
+          createTabs();
+          createControls();
+          renderComponent();
+          updateDocs();
+
+          // 약간의 지연을 두고 코드 업데이트 (컴포넌트 렌더링이 완료된 후)
+          setTimeout(() => {
+            updateCode();
+          }, 100);
+        } catch (error) {
+          console.error("초기화 중 오류 발생:", error);
+        }
+      });
+    </script>
+  </body>
+</html>
