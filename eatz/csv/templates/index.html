@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="ko" class="has-background-light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>귀여운 대용량 데이터 생성기</title>
+    <!-- Bulma CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts - 귀여운 느낌의 폰트 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #ff85a2;
+        --primary-light: #ffd1dc;
+        --secondary: #aedefc;
+        --accent: #ffc8dd;
+        --success: #a9e190;
+        --light-bg: #fff8f9;
+        --radius: 1.5rem;
+      }
+
+      body {
+        font-family: "Jua", sans-serif;
+        background-color: var(--light-bg);
+        min-height: 100vh;
+      }
+
+      .title,
+      .subtitle,
+      .card-header-title {
+        font-family: "Jua", sans-serif;
+      }
+
+      p,
+      .content {
+        font-family: "Gaegu", cursive;
+        font-size: 1.1rem;
+      }
+
+      .navbar {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .navbar-item {
+        font-family: "Jua", sans-serif;
+      }
+
+      .navbar-brand .navbar-item {
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+
+      .card {
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(10, 10, 10, 0.08);
+        margin-bottom: 2rem;
+      }
+
+      .card-header {
+        background-color: var(--primary);
+        color: white;
+        border-radius: var(--radius) var(--radius) 0 0;
+        box-shadow: none;
+        align-items: center;
+        padding: 1.25rem;
+      }
+
+      .card-header-title {
+        color: white;
+        font-size: 1.25rem;
+      }
+
+      .box {
+        border-radius: var(--radius);
+        box-shadow: 0 4px 8px rgba(10, 10, 10, 0.05);
+      }
+
+      .button {
+        font-family: "Jua", sans-serif;
+        border-radius: 2rem;
+        transition: all 0.3s;
+      }
+
+      .button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1),
+          0 3px 6px rgba(0, 0, 0, 0.08);
+      }
+
+      .button.is-primary {
+        background-color: var(--primary);
+      }
+
+      .button.is-primary:hover {
+        background-color: #ff6b8b;
+      }
+
+      .button.is-success {
+        background-color: var(--success);
+      }
+
+      .button.is-success:hover {
+        background-color: #98d67e;
+      }
+
+      .notification {
+        border-radius: var(--radius);
+      }
+
+      .input,
+      .select select {
+        border-radius: 1rem;
+        transition: all 0.3s;
+      }
+
+      .input:focus,
+      .select select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.125em rgba(255, 133, 162, 0.25);
+      }
+
+      .file-label {
+        border-radius: 1rem;
+      }
+
+      /* 스텝 인디케이터 스타일 */
+      .steps {
+        display: flex;
+        margin-bottom: 2rem;
+        position: relative;
+      }
+
+      .step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+      }
+
+      .step-marker {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        border: 3px solid #dbdbdb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: #7a7a7a;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s;
+      }
+
+      .step-title {
+        color: #7a7a7a;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .step-item.is-active .step-marker {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: white;
+      }
+
+      .step-item.is-active .step-title {
+        color: var(--primary);
+      }
+
+      .step-item.is-completed .step-marker {
+        background-color: var(--success);
+        border-color: var(--success);
+        color: white;
+      }
+
+      .steps::after {
+        content: "";
+        position: absolute;
+        width: 90%;
+        height: 3px;
+        background-color: #dbdbdb;
+        top: 25px;
+        left: 5%;
+        z-index: 0;
+      }
+
+      /* 애니메이션 효과 */
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+
+      .cute-bounce {
+        animation: bounce 2s infinite ease-in-out;
+      }
+
+      /* 귀여운 캐릭터 요소 */
+      .cute-character {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 120px;
+        height: 120px;
+        z-index: 1000;
+      }
+
+      /* 옵션 박스 스타일 */
+      .option-box {
+        background-color: #f7f7f7;
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 2px dashed #dbdbdb;
+      }
+
+      /* 미리보기 테이블 스타일 */
+      .preview-table {
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .preview-table th {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* 토스트 메시지 스타일 */
+      #statusMsg {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        min-width: 300px;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+      }
+
+      #statusMsg.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* 프로그레스 바 스타일 */
+      .progress::-webkit-progress-value {
+        background-color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 네비게이션 헤더 -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="#">
+            <i class="fas fa-magic mr-2"></i>
+            귀여운 데이터 생성기
+          </a>
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navMenu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div id="navMenu" class="navbar-menu">
+          <div class="navbar-end">
+            <a id="darkModeToggle" class="navbar-item">
+              <span class="icon">
+                <i class="fas fa-moon"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 메인 컨텐츠 -->
+    <section class="section">
+      <div class="container">
+        <div class="card">
+          <!-- 상단 스텝 표시기 -->
+          <div class="card-content pb-1">
+            <div class="steps">
+              <div class="step-item is-active" id="step-indicator-1">
+                <div class="step-marker">1</div>
+                <div class="step-title">WIN_NO 설정</div>
+              </div>
+              <div class="step-item" id="step-indicator-2">
+                <div class="step-marker">2</div>
+                <div class="step-title">데이터 설정</div>
+              </div>
+              <div class="step-item" id="step-indicator-3">
+                <div class="step-marker">3</div>
+                <div class="step-title">미리보기</div>
+              </div>
+              <div class="step-item" id="step-indicator-4">
+                <div class="step-marker">4</div>
+                <div class="step-title">생성 및 다운로드</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-content pt-0">
+            <!-- 스텝 컨텐츠 -->
+            <div class="step-content">
+              <!-- 1단계: WIN_NO 설정 -->
+              <div class="step-pane" id="step1">
+                <h3 class="title is-4">WIN_NO 생성 방식 설정</h3>
+                <p class="subtitle is-6 has-text-grey mb-5">
+                  데이터에 사용할 WIN_NO를 생성할 방식을 선택하세요
+                </p>
+
+                <div class="field mb-5">
+                  <div class="control">
+                    <label class="radio">
+                      <input
+                        type="radio"
+                        name="winNoType"
+                        id="fileUpload"
+                        value="file"
+                        checked
+                      />
+                      <span class="has-text-weight-bold ml-2"
+                        >파일에서 WIN_NO 목록 가져오기</span
+                      >
+                    </label>
+                  </div>
+
+                  <div id="fileUploadOptions" class="option-box mt-3">
+                    <div class="field">
+                      <label class="label">
+                        <span class="icon-text">
+                          <span class="icon has-text-primary">
+                            <i class="fas fa-file-upload"></i>
+                          </span>
+                          <span>파일 선택</span>
+                        </span>
+                      </label>
+                      <div class="control">
+                        <div class="file has-name is-fullwidth">
+                          <label class="file-label">
+                            <input
+                              class="file-input"
+                              type="file"
+                              id="winNoFile"
+                              name="winNoFile"
+                              accept=".txt,.csv,.xlsx,.xls"
+                            />
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label"> 파일 선택하기 </span>
+                            </span>
+                            <span class="file-name" id="file-name-display">
+                              선택된 파일 없음
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="notification is-info is-light mt-4">
+                      <div class="columns is-vcentered">
+                        <div class="column is-narrow">
+                          <span class="icon">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                        </div>
+                        <div class="column">
+                          <p>
+                            텍스트 파일(.txt), CSV 파일(.csv) 또는 Excel
+                            파일(.xlsx, .xls)을 업로드하세요.
+                          </p>
+                          <p>파일의 각 줄/행은 하나의 WIN_NO로 처리됩니다.</p>
+                          <p>
+                            CSV나 Excel 파일의 경우 첫 번째 열만 WIN_NO로
+                            사용합니다.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      id="fileStatus"
+                      class="notification mt-4 is-hidden"
+                    ></div>
+                  </div>
+
+                  <div class="control mt-5">
+                    <label class="radio">
+                      <input
+                        type="radio"
+                        name="winNoType"
+                        id="sequential"
+                        value="sequential"
+                      />
+                      <span class="has-text-weight-bold ml-2"
+                        >순차 번호 (1, 2, 3, ...)</span
+                      >
+                    </label>
+                  </div>
+
+                  <div id="sequentialOptions" class="option-box mt-3 is-hidden">
+                    <div class="field">
+                      <label class="label">
+                        <span class="icon-text">
+                          <span class="icon has-text-primary">
+                            <i class="fas fa-sort-numeric-down"></i>
+                          </span>
+                          <span>시작 번호:</span>
+                        </span>
+                      </label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="number"
+                          name="startNumber"
+                          id="startNumber"
+                          value="1"
+                          min="1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="control mt-5">
+                    <label class="radio">
+                      <input
+                        type="radio"
+                        name="winNoType"
+                        id="prefix"
+                        value="prefix"
+                      />
+                      <span class="has-text-weight-bold ml-2"
+                        >접두사 + 순차 번호 (예: WIN001, WIN002, ...)</span
+                      >
+                    </label>
+                  </div>
+
+                  <div id="prefixOptions" class="option-box mt-3 is-hidden">
+                    <div class="field">
+                      <label class="label">
+                        <span class="icon-text">
+                          <span class="icon has-text-primary">
+                            <i class="fas fa-font"></i>
+                          </span>
+                          <span>접두사:</span>
+                        </span>
+                      </label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="text"
+                          name="prefixText"
+                          id="prefixText"
+                          placeholder="예: WIN"
+                        />
+                      </div>
+                    </div>
+                    <div class="field mt-4">
+                      <label class="label">
+                        <span class="icon-text">
+                          <span class="icon has-text-primary">
+                            <i class="fas fa-hashtag"></i>
+                          </span>
+                          <span>순차 번호 자릿수:</span>
+                        </span>
+                      </label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="number"
+                          name="digitCount"
+                          id="digitCount"
+                          value="3"
+                          min="1"
+                          max="10"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2단계: 데이터 설정 -->
+              <div class="step-pane is-hidden" id="step2">
+                <h3 class="title is-4">데이터 기본 정보 설정</h3>
+                <p class="subtitle is-6 has-text-grey mb-5">
+                  생성할 데이터의 기본 정보를 입력하세요
+                </p>
+
+                <div class="box mb-5">
+                  <div class="content">
+                    <h4 class="title is-5 has-text-primary mb-4">
+                      <span class="icon-text">
+                        <span class="icon">
+                          <i class="fas fa-database"></i>
+                        </span>
+                        <span>데이터 필드 설정</span>
+                      </span>
+                    </h4>
+
+                    <!-- 필드 그룹 1: 기본 정보 -->
+                    <div class="mb-5">
+                      <h5 class="title is-6 has-text-primary-dark mb-4">
+                        기본 필드 값
+                      </h5>
+                      <div class="columns is-multiline">
+                        <!-- EVENT_NO 필드 -->
+                        <div class="column is-half">
+                          <div class="field">
+                            <label class="label">EVENT_NO</label>
+                            <div class="control has-icons-left">
+                              <input
+                                class="input"
+                                type="text"
+                                id="event_no"
+                                name="event_no"
+                                placeholder="EVENT_NO 값 입력"
+                              />
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-bookmark has-text-primary"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- REWARD_NM 필드 -->
+                        <div class="column is-half">
+                          <div class="field">
+                            <label class="label">REWARD_NM</label>
+                            <div class="control has-icons-left">
+                              <input
+                                class="input"
+                                type="text"
+                                id="reward_nm"
+                                name="reward_nm"
+                                placeholder="REWARD_NM 값 입력"
+                              />
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-gift has-text-primary"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- REWARD_CD 필드 -->
+                        <div class="column is-half">
+                          <div class="field">
+                            <label class="label">REWARD_CD</label>
+                            <div class="control has-icons-left">
+                              <input
+                                class="input"
+                                type="text"
+                                id="reward_cd"
+                                name="reward_cd"
+                                placeholder="REWARD_CD 값 입력"
+                              />
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-tag has-text-primary"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- USE_YN 필드 -->
+                        <div class="column is-half">
+                          <div class="field">
+                            <label class="label">USE_YN</label>
+                            <div class="control has-icons-left">
+                              <div class="select is-fullwidth">
+                                <select id="use_yn" name="use_yn">
+                                  <option value="Y">Y</option>
+                                  <option value="N">N</option>
+                                </select>
+                              </div>
+                              <span class="icon is-small is-left">
+                                <i
+                                  class="fas fa-toggle-on has-text-primary"
+                                ></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 필드 그룹 2: 출력 설정 -->
+                    <div>
+                      <h5 class="title is-6 has-text-primary-dark mb-4">
+                        출력 설정
+                      </h5>
+                      <div class="columns is-multiline">
+                        <!-- 행 수 필드 -->
+                        <div class="column is-half">
+                          <div class="field">
+                            <label class="label">생성할 행 수</label>
+                            <div class="control has-icons-left">
+                              <input
+                                class="input"
+                                type="number"
+                                id="rowCount"
+                                name="rowCount"
+                                placeholder="생성할 데이터 행 수"
+                                min="1"
+                                value="10"
+                              />
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-table has-text-primary"></i>
+                              </span>
+                            </div>
+                            <p class="help">
+                              생성할 총 데이터 행 수를 입력하세요
+                            </p>
+                          </div>
+                        </div>
+
+                        <!-- 출력 형식 필드 -->
+                        <div class="column is-half">
+                          <div class="field">
+                            <label class="label">출력 파일 형식</label>
+                            <div class="control has-icons-left">
+                              <div class="select is-fullwidth">
+                                <select id="outputFormat" name="outputFormat">
+                                  <option value="csv">CSV 파일 (.csv)</option>
+                                  <option value="xlsx">
+                                    Excel 파일 (.xlsx)
+                                  </option>
+                                </select>
+                              </div>
+                              <span class="icon is-small is-left">
+                                <i
+                                  class="fas fa-file-export has-text-primary"
+                                ></i>
+                              </span>
+                            </div>
+                            <p class="help">
+                              다운로드할 파일 형식을 선택하세요
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 도움말 정보 -->
+                <div class="notification is-primary is-light">
+                  <div class="columns is-vcentered">
+                    <div class="column is-narrow">
+                      <span class="icon is-medium">
+                        <i class="fas fa-lightbulb fa-lg"></i>
+                      </span>
+                    </div>
+                    <div class="column">
+                      <h5 class="title is-5 mb-2">참고사항</h5>
+                      <p>
+                        입력한 내용을 기반으로 WIN_NO 별 데이터가 생성됩니다.
+                        모든 필드는 필수 입력 항목입니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3단계: 미리보기 -->
+              <div class="step-pane is-hidden" id="step3">
+                <h3 class="title is-4">데이터 미리보기</h3>
+                <p class="subtitle is-6 has-text-grey mb-5">
+                  생성할 데이터의 샘플을 확인하세요
+                </p>
+
+                <div class="field mb-5">
+                  <div class="control">
+                    <button
+                      id="previewBtn"
+                      type="button"
+                      onclick="generatePreview()"
+                      class="button is-primary"
+                    >
+                      <span class="icon">
+                        <i class="fas fa-sync-alt"></i>
+                      </span>
+                      <span>미리보기 생성</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div id="previewTableContainer" class="is-hidden">
+                  <div class="table-container preview-table">
+                    <table
+                      class="table is-bordered is-striped is-hoverable is-fullwidth"
+                    >
+                      <thead>
+                        <tr>
+                          <th>EVENT_NO</th>
+                          <th>WIN_NO</th>
+                          <th>REWARD_NM</th>
+                          <th>REWARD_CD</th>
+                          <th>USE_YN</th>
+                        </tr>
+                      </thead>
+                      <tbody id="previewTableBody">
+                        <!-- 데이터가 여기에 동적으로 추가됩니다 -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4단계: 생성 및 다운로드 -->
+              <div class="step-pane is-hidden" id="step4">
+                <div class="has-text-centered py-6">
+                  <div
+                    class="is-inline-block p-5 mb-4 has-background-success-light has-text-success"
+                    style="border-radius: 50%"
+                  >
+                    <span class="icon is-large">
+                      <i class="fas fa-check fa-3x"></i>
+                    </span>
+                  </div>
+                  <h3 class="title is-3 mb-12">데이터 생성 준비 완료</h3>
+                  <p class="subtitle is-5 mb-6 mt-12">
+                    모든 설정이 완료되었습니다. 아래 버튼을 클릭하여 설정한
+                    내용에 따라 데이터를 생성하고 다운로드하세요.
+                  </p>
+
+                  <button
+                    id="generateBtn"
+                    type="button"
+                    onclick="generateAndDownload()"
+                    class="button is-success is-large"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-download"></i>
+                    </span>
+                    <span>파일 생성 및 다운로드</span>
+                  </button>
+
+                  <div id="progressContainer" class="mt-6 is-hidden">
+                    <progress
+                      id="progressBar"
+                      class="progress is-primary"
+                      value="0"
+                      max="100"
+                    >
+                      0%
+                    </progress>
+                    <p class="help" id="progressText">처리 중... 0%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 하단 네비게이션 -->
+            <div
+              class="field is-grouped is-justify-content-space-between mt-6 pt-4"
+              style="border-top: 1px solid #f0f0f0"
+            >
+              <div class="control">
+                <button
+                  id="prevBtn"
+                  type="button"
+                  onclick="goToPrevStep()"
+                  class="button is-light is-hidden"
+                >
+                  <span class="icon">
+                    <i class="fas fa-arrow-left"></i>
+                  </span>
+                  <span>이전 단계</span>
+                </button>
+              </div>
+              <div class="control">
+                <button
+                  id="nextBtn"
+                  type="button"
+                  onclick="goToNextStep()"
+                  class="button is-primary"
+                >
+                  <span>다음 단계</span>
+                  <span class="icon">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 귀여운 캐릭터 요소 -->
+    <div class="cute-character cute-bounce">
+      <img
+        src="https://cdn.crowdpic.net/detail-thumb/thumb_d_8090F3E4F1C137A8FA04EE853F23A66A.png"
+        alt="Cute Data Assistant"
+      />
+    </div>
+
+    <!-- 상태 메시지 -->
+    <div id="statusMsg" class="notification">
+      <!-- 내용은 JavaScript에서 동적으로 채워짐 -->
+    </div>
+
+    <script>
+      let sessionId = null;
+      let currentStep = 1;
+      let winNoCount = 0;
+
+      // 페이지 로드 시 초기화
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeNavbar();
+        initializeDarkMode();
+        initializeRadioButtons();
+        updateStepNavigation();
+        initializeFileInput();
+        document.getElementById("generateBtn").disabled = true;
+      });
+
+      // 네비게이션 바 초기화 (햄버거 메뉴 토글)
+      function initializeNavbar() {
+        const $navbarBurgers = Array.prototype.slice.call(
+          document.querySelectorAll(".navbar-burger"),
+          0
+        );
+
+        if ($navbarBurgers.length > 0) {
+          $navbarBurgers.forEach((el) => {
+            el.addEventListener("click", () => {
+              const target = el.dataset.target;
+              const $target = document.getElementById(target);
+              el.classList.toggle("is-active");
+              $target.classList.toggle("is-active");
+            });
+          });
+        }
+      }
+
+      // 파일 인풋 초기화
+      function initializeFileInput() {
+        const fileInput = document.getElementById("winNoFile");
+        const fileName = document.getElementById("file-name-display");
+
+        fileInput.addEventListener("change", () => {
+          if (fileInput.files.length > 0) {
+            fileName.textContent = fileInput.files[0].name;
+          } else {
+            fileName.textContent = "선택된 파일 없음";
+          }
+        });
+      }
+
+      // 다크 모드 초기화
+      function initializeDarkMode() {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const isDarkMode = localStorage.getItem("darkMode") === "true";
+
+        if (isDarkMode) {
+          document.documentElement.classList.add("dark");
+        }
+
+        darkModeToggle.addEventListener("click", function () {
+          document.documentElement.classList.toggle("dark");
+          localStorage.setItem(
+            "darkMode",
+            document.documentElement.classList.contains("dark")
+          );
+        });
+      }
+
+      // 라디오 버튼 이벤트 초기화
+      function initializeRadioButtons() {
+        // 라디오 버튼 변경 이벤트 처리
+        document
+          .querySelectorAll('input[name="winNoType"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", function () {
+              // 모든 옵션 컨테이너 숨기기
+              document
+                .getElementById("sequentialOptions")
+                .classList.add("is-hidden");
+              document
+                .getElementById("prefixOptions")
+                .classList.add("is-hidden");
+              document
+                .getElementById("fileUploadOptions")
+                .classList.add("is-hidden");
+
+              // 선택된 옵션 컨테이너 표시하기
+              if (document.getElementById("sequential").checked) {
+                document
+                  .getElementById("sequentialOptions")
+                  .classList.remove("is-hidden");
+              } else if (document.getElementById("prefix").checked) {
+                document
+                  .getElementById("prefixOptions")
+                  .classList.remove("is-hidden");
+              } else if (document.getElementById("fileUpload").checked) {
+                document
+                  .getElementById("fileUploadOptions")
+                  .classList.remove("is-hidden");
+              }
+            });
+          });
+
+        // 파일 업로드 처리
+        document
+          .getElementById("winNoFile")
+          .addEventListener("change", handleFileUpload);
+      }
+
+      // 파일 업로드 처리 함수
+      async function handleFileUpload(e) {
+        const file = e.target.files[0];
+        if (!file) {
+          showStatus("파일이 선택되지 않았습니다.", "is-danger");
+          return;
+        }
+
+        // 파일 크기 확인 (100MB 제한)
+        if (file.size > 100 * 1024 * 1024) {
+          showStatus(
+            "파일 크기가 너무 큽니다. 100MB 이하의 파일을 선택하세요.",
+            "is-danger"
+          );
+          return;
+        }
+
+        showStatus("파일 업로드 중...", "is-info");
+
+        // FormData 객체 생성
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          // 파일 업로드 요청
+          const response = await fetch("/upload", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            sessionId = data.session_id;
+            winNoCount = data.count;
+            showStatus(data.message, "is-success");
+            document.getElementById("generateBtn").disabled = false;
+
+            // 행 수 입력 필드 값 업데이트
+            document.getElementById("rowCount").value = Math.min(
+              winNoCount,
+              10000
+            );
+          } else {
+            showStatus(data.message, "is-danger");
+            sessionId = null;
+            winNoCount = 0;
+          }
+        } catch (error) {
+          showStatus("파일 업로드 중 오류가 발생했습니다.", "is-danger");
+          console.error("Error:", error);
+        }
+      }
+
+      // 이전 단계로 이동
+      function goToPrevStep() {
+        if (currentStep > 1) {
+          goToStep(currentStep - 1);
+        }
+      }
+
+      // 다음 단계로 이동
+      function goToNextStep() {
+        if (validateCurrentStep()) {
+          goToStep(currentStep + 1);
+        }
+      }
+
+      // 현재 단계 유효성 검사
+      function validateCurrentStep() {
+        switch (currentStep) {
+          case 1:
+            const winNoType = document.querySelector(
+              'input[name="winNoType"]:checked'
+            ).value;
+            if (winNoType === "file" && !sessionId) {
+              showStatus(
+                "WIN_NO 데이터가 로드되지 않았습니다. 파일을 먼저 업로드하세요.",
+                "is-danger"
+              );
+              return false;
+            }
+
+            if (
+              winNoType === "prefix" &&
+              !document.getElementById("prefixText").value
+            ) {
+              showStatus("접두사를 입력해주세요.", "is-danger");
+              return false;
+            }
+            return true;
+
+          case 2:
+            const eventNo = document.getElementById("event_no").value;
+            const rewardNm = document.getElementById("reward_nm").value;
+            const rewardCd = document.getElementById("reward_cd").value;
+            const rowCount = parseInt(
+              document.getElementById("rowCount").value
+            );
+
+            if (!rowCount || !eventNo || !rewardNm || !rewardCd) {
+              showStatus("모든 필수 필드를 입력해주세요.", "is-danger");
+              return false;
+            }
+            return true;
+
+          default:
+            return true;
+        }
+      }
+
+      // 특정 단계로 이동
+      function goToStep(step) {
+        if (step < 1 || step > 4) return;
+
+        // 현재 단계 스타일 업데이트
+        document.querySelectorAll(".step-pane").forEach((pane) => {
+          pane.classList.add("is-hidden");
+        });
+
+        // 새 단계 표시
+        document.getElementById(`step${step}`).classList.remove("is-hidden");
+
+        // 스텝 인디케이터 업데이트
+        updateStepIndicator(step);
+
+        // 현재 단계 업데이트
+        currentStep = step;
+
+        // 네비게이션 버튼 업데이트
+        updateStepNavigation();
+
+        // 3단계에서 자동으로 미리보기 생성
+        if (step === 3) {
+          generatePreview();
+        }
+      }
+
+      // 단계 인디케이터 업데이트
+      function updateStepIndicator(newStep) {
+        document.querySelectorAll(".step-item").forEach((item, index) => {
+          const stepNumber = index + 1;
+
+          // 클래스 초기화
+          item.classList.remove("is-active", "is-completed");
+
+          if (stepNumber < newStep) {
+            // 완료된 단계
+            item.classList.add("is-completed");
+            const marker = item.querySelector(".step-marker");
+            marker.innerHTML = '<i class="fas fa-check"></i>';
+          } else if (stepNumber === newStep) {
+            // 현재 단계
+            item.classList.add("is-active");
+            const marker = item.querySelector(".step-marker");
+            marker.innerHTML = stepNumber;
+          } else {
+            // 미완료 단계
+            const marker = item.querySelector(".step-marker");
+            marker.innerHTML = stepNumber;
+          }
+        });
+      }
+
+      // 단계별 네비게이션 버튼 업데이트
+      function updateStepNavigation() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        // 이전 버튼 표시 설정
+        if (currentStep === 1) {
+          prevBtn.classList.add("is-hidden");
+        } else {
+          prevBtn.classList.remove("is-hidden");
+        }
+
+        // 다음 버튼 텍스트 및 스타일 설정
+        if (currentStep === 4) {
+          nextBtn.classList.add("is-hidden");
+        } else {
+          nextBtn.classList.remove("is-hidden");
+
+          if (currentStep === 3) {
+            nextBtn.innerHTML =
+              '<span class="icon"><i class="fas fa-check"></i></span><span>완료</span>';
+          } else {
+            nextBtn.innerHTML =
+              '<span>다음 단계</span><span class="icon"><i class="fas fa-arrow-right"></i></span>';
+          }
+        }
+      }
+
+      // 상태 메시지 표시
+      function showStatus(message, type) {
+        const statusEl = document.getElementById("statusMsg");
+
+        // 메시지 요소 설정
+        statusEl.className = "notification " + type;
+
+        // 메시지 내용 설정
+        let icon = "";
+        switch (type) {
+          case "is-success":
+            icon = '<i class="fas fa-check-circle"></i>';
+            break;
+          case "is-danger":
+            icon = '<i class="fas fa-exclamation-circle"></i>';
+            break;
+          case "is-info":
+            icon = '<i class="fas fa-info-circle"></i>';
+            break;
+          case "is-warning":
+            icon = '<i class="fas fa-exclamation-triangle"></i>';
+            break;
+        }
+
+        statusEl.innerHTML = `
+          <button class="delete" onclick="hideStatus()"></button>
+          <span class="icon-text">
+            <span class="icon">${icon}</span>
+            <span>${message}</span>
+          </span>
+        `;
+
+        // 메시지 표시
+        statusEl.classList.add("show");
+
+        // 파일 상태 메시지 표시 (1단계에만)
+        if (
+          currentStep === 1 &&
+          document.getElementById("fileUpload").checked
+        ) {
+          const fileStatusEl = document.getElementById("fileStatus");
+
+          // 파일 상태 메시지 클래스 설정
+          fileStatusEl.className = `notification ${type}`;
+
+          // 파일 상태 메시지 내용 설정
+          fileStatusEl.innerHTML = `
+            <button class="delete" onclick="document.getElementById('fileStatus').classList.add('is-hidden')"></button>
+            <span class="icon-text">
+              <span class="icon">${icon}</span>
+              <span>${message}</span>
+            </span>
+          `;
+
+          // 파일 상태 메시지 표시
+          fileStatusEl.classList.remove("is-hidden");
+        }
+
+        // 5초 후 메시지 자동 숨김
+        setTimeout(() => {
+          hideStatus();
+        }, 5000);
+      }
+
+      // 상태 메시지 숨김
+      function hideStatus() {
+        const statusEl = document.getElementById("statusMsg");
+        statusEl.classList.remove("show");
+      }
+
+      // 진행 바 업데이트
+      function updateProgress(percent) {
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
+        progressBar.value = percent;
+        progressText.textContent = `처리 중... ${percent}%`;
+      }
+
+      // 진행 표시줄 표시/숨김
+      function showProgress(show) {
+        const progressContainer = document.getElementById("progressContainer");
+        if (show) {
+          progressContainer.classList.remove("is-hidden");
+        } else {
+          progressContainer.classList.add("is-hidden");
+        }
+      }
+
+      // 미리보기 생성 함수
+      async function generatePreview() {
+        const winNoType = document.querySelector(
+          'input[name="winNoType"]:checked'
+        ).value;
+        const rowCount = parseInt(document.getElementById("rowCount").value);
+        const eventNo = document.getElementById("event_no").value;
+        const rewardNm = document.getElementById("reward_nm").value;
+        const rewardCd = document.getElementById("reward_cd").value;
+        const useYn = document.getElementById("use_yn").value;
+
+        if (!rowCount || !eventNo || !rewardNm || !rewardCd) {
+          showStatus("모든 필수 필드를 입력해주세요.", "is-danger");
+          return;
+        }
+
+        // 파일 업로드 방식 체크
+        if (winNoType === "file" && !sessionId) {
+          showStatus(
+            "WIN_NO 데이터가 로드되지 않았습니다. 파일을 먼저 업로드하세요.",
+            "is-danger"
+          );
+          return;
+        }
+
+        // 생성 버튼 비활성화 및 로딩 표시
+        const previewBtn = document.getElementById("previewBtn");
+        previewBtn.disabled = true;
+        previewBtn.classList.add("is-loading");
+        showStatus("데이터 미리보기를 생성 중입니다...", "is-info");
+
+        const requestData = {
+          winNoType: winNoType,
+          count: rowCount,
+          eventNo: eventNo,
+          rewardNm: rewardNm,
+          rewardCd: rewardCd,
+          useYn: useYn,
+        };
+
+        // 선택된 방식에 따라 필요한 데이터 추가
+        if (winNoType === "file") {
+          requestData.session_id = sessionId;
+        } else if (winNoType === "sequential") {
+          requestData.startNumber =
+            document.getElementById("startNumber").value;
+        } else if (winNoType === "prefix") {
+          requestData.prefix = document.getElementById("prefixText").value;
+          requestData.digitCount = document.getElementById("digitCount").value;
+        }
+
+        try {
+          const response = await fetch("/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // 성공 메시지 표시
+            showStatus(data.message, "is-success");
+
+            // 미리보기 표시
+            const tableBody = document.getElementById("previewTableBody");
+            tableBody.innerHTML = "";
+
+            // 샘플 데이터로 미리보기 생성 (임의 데이터 사용)
+            for (let i = 0; i < Math.min(10, rowCount); i++) {
+              const winNo =
+                winNoType === "sequential"
+                  ? (parseInt(requestData.startNumber) + i).toString()
+                  : winNoType === "prefix"
+                  ? `${requestData.prefix}${(i + 1)
+                      .toString()
+                      .padStart(parseInt(requestData.digitCount), "0")}`
+                  : `Sample-${i + 1}`;
+
+              const tr = document.createElement("tr");
+
+              tr.innerHTML = `
+                <td>${eventNo}</td>
+                <td>${winNo}</td>
+                <td>${rewardNm}</td>
+                <td>${rewardCd}</td>
+                <td>${useYn}</td>
+              `;
+              tableBody.appendChild(tr);
+            }
+
+            // 미리보기 컨테이너 표시
+            document
+              .getElementById("previewTableContainer")
+              .classList.remove("is-hidden");
+
+            // 생성 버튼 활성화
+            document.getElementById("generateBtn").disabled = false;
+          } else {
+            showStatus(data.message, "is-danger");
+          }
+        } catch (error) {
+          showStatus("데이터 생성 중 오류가 발생했습니다.", "is-danger");
+          console.error("Error:", error);
+        } finally {
+          // 버튼 상태 복원
+          previewBtn.disabled = false;
+          previewBtn.classList.remove("is-loading");
+        }
+      }
+
+      // 파일 생성 및 다운로드 함수
+      async function generateAndDownload() {
+        const winNoType = document.querySelector(
+          'input[name="winNoType"]:checked'
+        ).value;
+        const rowCount = parseInt(document.getElementById("rowCount").value);
+        const eventNo = document.getElementById("event_no").value;
+        const rewardNm = document.getElementById("reward_nm").value;
+        const rewardCd = document.getElementById("reward_cd").value;
+        const useYn = document.getElementById("use_yn").value;
+        const outputFormat = document.getElementById("outputFormat").value;
+
+        if (!rowCount || !eventNo || !rewardNm || !rewardCd) {
+          showStatus("모든 필수 필드를 입력해주세요.", "is-danger");
+          return;
+        }
+
+        // 파일 업로드 방식 체크
+        if (winNoType === "file" && !sessionId) {
+          showStatus(
+            "WIN_NO 데이터가 로드되지 않았습니다. 파일을 먼저 업로드하세요.",
+            "is-danger"
+          );
+          return;
+        }
+
+        // 버튼 상태 변경 (로딩 표시)
+        const generateBtn = document.getElementById("generateBtn");
+        generateBtn.disabled = true;
+        generateBtn.classList.add("is-loading");
+
+        // 진행 표시줄 표시
+        showProgress(true);
+        updateProgress(10);
+
+        showStatus(
+          "파일을 생성하고 있습니다. 잠시만 기다려주세요...",
+          "is-info"
+        );
+
+        const requestData = {
+          winNoType: winNoType,
+          count: rowCount,
+          eventNo: eventNo,
+          rewardNm: rewardNm,
+          rewardCd: rewardCd,
+          useYn: useYn,
+          outputFormat: outputFormat,
+        };
+
+        // 선택된 방식에 따라 필요한 데이터 추가
+        if (winNoType === "file") {
+          requestData.session_id = sessionId;
+        } else if (winNoType === "sequential") {
+          requestData.startNumber =
+            document.getElementById("startNumber").value;
+        } else if (winNoType === "prefix") {
+          requestData.prefix = document.getElementById("prefixText").value;
+          requestData.digitCount = document.getElementById("digitCount").value;
+        }
+
+        try {
+          updateProgress(30);
+
+          const response = await fetch("/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          updateProgress(60);
+
+          const data = await response.json();
+
+          if (data.success) {
+            updateProgress(80);
+
+            // 성공 메시지 표시
+            showStatus(data.message, "is-success");
+
+            // 다운로드 링크 생성 및 클릭
+            const link = document.createElement("a");
+            link.href = data.download_url;
+            link.download =
+              outputFormat === "xlsx"
+                ? "generated_data.xlsx"
+                : "generated_data.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            updateProgress(100);
+
+            // 성공 아이콘에 애니메이션 추가
+            const successIcon = document.querySelector(
+              "#step4 .is-inline-block"
+            );
+            successIcon.classList.add("cute-bounce");
+
+            // 다운로드 완료 표시
+            showStatus("파일 생성 및 다운로드가 완료되었습니다!", "is-success");
+          } else {
+            showStatus(data.message, "is-danger");
+            updateProgress(0);
+          }
+        } catch (error) {
+          showStatus("데이터 생성 중 오류가 발생했습니다.", "is-danger");
+          console.error("Error:", error);
+          updateProgress(0);
+        } finally {
+          // 버튼 상태 복원
+          generateBtn.disabled = false;
+          generateBtn.classList.remove("is-loading");
+
+          // 5초 후 진행 표시줄 숨기기
+          setTimeout(() => {
+            showProgress(false);
+          }, 5000);
+        }
+      }
+    </script>
+  </body>
+</html>

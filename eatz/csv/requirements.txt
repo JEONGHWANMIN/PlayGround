@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+openpyxl
+python-multipart
+pydantic
+starlette
+python-dateutil

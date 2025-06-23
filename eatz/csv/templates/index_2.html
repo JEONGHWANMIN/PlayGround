@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>귀여운 대용량 데이터 생성기</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts - Rounded fonts for cute look -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #ff85a2;
+        --primary-hover: #ff6b8b;
+        --secondary: #ffd1dc;
+        --accent: #aedefc;
+        --accent-dark: #83cfff;
+        --success: #a9e190;
+        --border-radius: 1rem;
+        --card-border-radius: 1.5rem;
+        --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+      }
+
+      body {
+        font-family: "Nunito", sans-serif;
+        background-color: #fff8f9;
+      }
+
+      .navbar {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        background-color: white;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .card {
+        border-radius: var(--card-border-radius);
+        border: none;
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        background-color: white;
+      }
+
+      .card-header {
+        background-color: var(--primary);
+        color: white;
+        font-weight: 600;
+        border-bottom: none;
+        padding: 1rem 1.5rem;
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: var(--border-radius);
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        border: 2px solid #f0f0f0;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.25rem rgba(174, 222, 252, 0.25);
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        border-radius: var(--border-radius);
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(255, 133, 162, 0.2);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(255, 133, 162, 0.3);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary);
+        color: #ff6584;
+        border-color: var(--secondary);
+        border-radius: var(--border-radius);
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+      }
+
+      .btn-secondary:hover {
+        background-color: #ffc0d0;
+        border-color: #ffc0d0;
+        color: #ff5277;
+      }
+
+      .btn-success {
+        background-color: var(--success);
+        border-color: var(--success);
+        color: #2e7d32;
+      }
+
+      .btn-success:hover {
+        background-color: #98d67e;
+        border-color: #98d67e;
+        color: #1b5e20;
+      }
+
+      .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .step-header {
+        margin-bottom: 2rem;
+      }
+
+      .step-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        border: 2px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #adb5bd;
+        margin-right: 15px;
+      }
+
+      .step-active .step-circle {
+        background-color: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      .step-completed .step-circle {
+        background-color: var(--success);
+        color: white;
+        border-color: var(--success);
+      }
+
+      .step-text {
+        font-weight: 600;
+        color: #adb5bd;
+      }
+
+      .step-active .step-text {
+        color: var(--primary);
+      }
+
+      .step-completed .step-text {
+        color: var(--success);
+      }
+
+      .step-connector {
+        flex: 1;
+        height: 2px;
+        background-color: #e9ecef;
+        margin: 0 10px;
+      }
+
+      .step-completed .step-connector {
+        background-color: var(--success);
+      }
+
+      .info-box {
+        background-color: var(--accent);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        color: #0060b9;
+      }
+
+      .preview-table {
+        border-radius: var(--border-radius);
+        overflow: hidden;
+      }
+
+      .preview-table thead {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .alert {
+        border-radius: var(--border-radius);
+      }
+
+      .option-box {
+        background-color: #f8f9fa;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px dashed #dee2e6;
+      }
+
+      /* Cute character elements */
+      .cute-element {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 120px;
+        height: 120px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        z-index: 100;
+        opacity: 0.9;
+      }
+
+      /* Custom animations */
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+
+      .bounce-animation {
+        animation: bounce 2s infinite ease-in-out;
+      }
+
+      /* Progress indicator styling */
+      .progress {
+        height: 10px;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+        margin-top: 1rem;
+      }
+
+      .progress-bar {
+        background-color: var(--primary);
+        border-radius: 10px;
+      }
+
+      /* Toast notification styling */
+      .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1050;
+      }
+
+      .toast {
+        border-radius: var(--border-radius);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <!-- 네비게이션 헤더 -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-magic me-2"></i>
+          귀여운 데이터 생성기
+        </a>
+      </div>
+    </nav>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="container py-5 mb-5">
+      <div class="card mb-4">
+        <!-- 상단 스텝 표시기 -->
+        <div class="card-body p-4">
+          <div
+            class="d-flex flex-wrap justify-content-between mb-4 step-header"
+          >
+            <div
+              class="d-flex align-items-center step-item step-active"
+              id="step-indicator-1"
+            >
+              <div class="step-circle">1</div>
+              <div class="step-text">WIN_NO 설정</div>
+              <div class="step-connector d-none d-md-block"></div>
+            </div>
+            <div
+              class="d-flex align-items-center step-item"
+              id="step-indicator-2"
+            >
+              <div class="step-circle">2</div>
+              <div class="step-text">데이터 설정</div>
+              <div class="step-connector d-none d-md-block"></div>
+            </div>
+            <div
+              class="d-flex align-items-center step-item"
+              id="step-indicator-3"
+            >
+              <div class="step-circle">3</div>
+              <div class="step-text">미리보기</div>
+              <div class="step-connector d-none d-md-block"></div>
+            </div>
+            <div
+              class="d-flex align-items-center step-item"
+              id="step-indicator-4"
+            >
+              <div class="step-circle">4</div>
+              <div class="step-text">생성 및 다운로드</div>
+            </div>
+          </div>
+
+          <!-- 스텝 컨텐츠 -->
+          <div class="step-content">
+            <!-- 1단계: WIN_NO 설정 -->
+            <div class="step-pane" id="step1">
+              <h3 class="mb-2">WIN_NO 생성 방식 설정</h3>
+              <p class="text-muted mb-4">
+                데이터에 사용할 WIN_NO를 생성할 방식을 선택하세요
+              </p>
+
+              <div class="mb-4">
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="winNoType"
+                    id="fileUpload"
+                    value="file"
+                    checked
+                  />
+                  <label class="form-check-label fw-bold" for="fileUpload">
+                    파일에서 WIN_NO 목록 가져오기
+                  </label>
+                </div>
+
+                <div id="fileUploadOptions" class="option-box">
+                  <div class="mb-4">
+                    <label for="winNoFile" class="form-label">
+                      <i class="fas fa-file-upload me-1 text-primary"></i>
+                      파일 선택
+                    </label>
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="winNoFile"
+                      name="winNoFile"
+                      accept=".txt,.csv,.xlsx,.xls"
+                    />
+                  </div>
+                  <div class="info-box">
+                    <div class="d-flex">
+                      <div>
+                        <i class="fas fa-info-circle me-2"></i>
+                      </div>
+                      <div>
+                        <p class="mb-1">
+                          텍스트 파일(.txt), CSV 파일(.csv) 또는 Excel
+                          파일(.xlsx, .xls)을 업로드하세요.
+                        </p>
+                        <p class="mb-1">
+                          파일의 각 줄/행은 하나의 WIN_NO로 처리됩니다.
+                        </p>
+                        <p class="mb-0">
+                          CSV나 Excel 파일의 경우 첫 번째 열만 WIN_NO로
+                          사용합니다.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="fileStatus" class="alert mt-3 d-none"></div>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="winNoType"
+                    id="sequential"
+                    value="sequential"
+                  />
+                  <label class="form-check-label fw-bold" for="sequential">
+                    순차 번호 (1, 2, 3, ...)
+                  </label>
+                </div>
+
+                <div id="sequentialOptions" class="option-box d-none">
+                  <div>
+                    <label for="startNumber" class="form-label">
+                      <i class="fas fa-sort-numeric-down me-1 text-primary"></i>
+                      시작 번호:
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="startNumber"
+                      id="startNumber"
+                      value="1"
+                      min="1"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="winNoType"
+                    id="prefix"
+                    value="prefix"
+                  />
+                  <label class="form-check-label fw-bold" for="prefix">
+                    접두사 + 순차 번호 (예: WIN001, WIN002, ...)
+                  </label>
+                </div>
+
+                <div id="prefixOptions" class="option-box d-none">
+                  <div class="mb-3">
+                    <label for="prefixText" class="form-label">
+                      <i class="fas fa-font me-1 text-primary"></i>
+                      접두사:
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="prefixText"
+                      id="prefixText"
+                      placeholder="예: WIN"
+                    />
+                  </div>
+                  <div>
+                    <label for="digitCount" class="form-label">
+                      <i class="fas fa-hashtag me-1 text-primary"></i>
+                      순차 번호 자릿수:
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="digitCount"
+                      id="digitCount"
+                      value="3"
+                      min="1"
+                      max="10"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2단계: 데이터 설정 -->
+            <div class="step-pane d-none" id="step2">
+              <h3 class="mb-2">데이터 기본 정보 설정</h3>
+              <p class="text-muted mb-4">
+                생성할 데이터의 기본 정보를 입력하세요
+              </p>
+
+              <div class="card mb-4">
+                <div class="card-header">
+                  <i class="fas fa-database me-2"></i>
+                  데이터 필드 설정
+                </div>
+                <div class="card-body">
+                  <!-- 필드 그룹 1: 기본 정보 -->
+                  <div class="mb-4">
+                    <h5 class="text-primary mb-3">기본 필드 값</h5>
+                    <div class="row g-3">
+                      <!-- EVENT_NO 필드 -->
+                      <div class="col-md-6">
+                        <label for="event_no" class="form-label"
+                          >EVENT_NO</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-bookmark text-primary"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="event_no"
+                            name="event_no"
+                            placeholder="EVENT_NO 값 입력"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- REWARD_NM 필드 -->
+                      <div class="col-md-6">
+                        <label for="reward_nm" class="form-label"
+                          >REWARD_NM</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-gift text-primary"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="reward_nm"
+                            name="reward_nm"
+                            placeholder="REWARD_NM 값 입력"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- REWARD_CD 필드 -->
+                      <div class="col-md-6">
+                        <label for="reward_cd" class="form-label"
+                          >REWARD_CD</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-tag text-primary"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="reward_cd"
+                            name="reward_cd"
+                            placeholder="REWARD_CD 값 입력"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- USE_YN 필드 -->
+                      <div class="col-md-6">
+                        <label for="use_yn" class="form-label">USE_YN</label>
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-toggle-on text-primary"></i
+                          ></span>
+                          <select class="form-select" id="use_yn" name="use_yn">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 필드 그룹 2: 출력 설정 -->
+                  <div>
+                    <h5 class="text-primary mb-3">출력 설정</h5>
+                    <div class="row g-3">
+                      <!-- 행 수 필드 -->
+                      <div class="col-md-6">
+                        <label for="rowCount" class="form-label"
+                          >생성할 행 수</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-table text-primary"></i
+                          ></span>
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="rowCount"
+                            name="rowCount"
+                            placeholder="생성할 데이터 행 수"
+                            min="1"
+                            value="10"
+                          />
+                        </div>
+                        <div class="form-text">
+                          생성할 총 데이터 행 수를 입력하세요
+                        </div>
+                      </div>
+
+                      <!-- 출력 형식 필드 -->
+                      <div class="col-md-6">
+                        <label for="outputFormat" class="form-label"
+                          >출력 파일 형식</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-file-export text-primary"></i
+                          ></span>
+                          <select
+                            class="form-select"
+                            id="outputFormat"
+                            name="outputFormat"
+                          >
+                            <option value="csv">CSV 파일 (.csv)</option>
+                            <option value="xlsx">Excel 파일 (.xlsx)</option>
+                          </select>
+                        </div>
+                        <div class="form-text">
+                          다운로드할 파일 형식을 선택하세요
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 도움말 정보 -->
+              <div class="info-box">
+                <div class="d-flex">
+                  <div>
+                    <i class="fas fa-lightbulb me-2"></i>
+                  </div>
+                  <div>
+                    <h5 class="fw-bold mb-1">참고사항</h5>
+                    <p class="mb-0">
+                      입력한 내용을 기반으로 WIN_NO 별 데이터가 생성됩니다. 모든
+                      필드는 필수 입력 항목입니다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3단계: 미리보기 -->
+            <div class="step-pane d-none" id="step3">
+              <h3 class="mb-2">데이터 미리보기</h3>
+              <p class="text-muted mb-4">생성할 데이터의 샘플을 확인하세요</p>
+
+              <button
+                id="previewBtn"
+                type="button"
+                onclick="generatePreview()"
+                class="btn btn-primary mb-4"
+              >
+                <i class="fas fa-sync-alt me-2"></i>
+                미리보기 생성
+              </button>
+
+              <div id="previewTableContainer" class="d-none">
+                <div class="table-responsive preview-table">
+                  <table class="table table-striped mb-0">
+                    <thead>
+                      <tr>
+                        <th>EVENT_NO</th>
+                        <th>WIN_NO</th>
+                        <th>REWARD_NM</th>
+                        <th>REWARD_CD</th>
+                        <th>USE_YN</th>
+                      </tr>
+                    </thead>
+                    <tbody id="previewTableBody">
+                      <!-- 데이터가 여기에 동적으로 추가됩니다 -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4단계: 생성 및 다운로드 -->
+            <div class="step-pane d-none" id="step4">
+              <div class="text-center py-4">
+                <div
+                  class="d-inline-flex justify-content-center align-items-center rounded-circle bg-success text-white mb-4 p-3"
+                  style="width: 100px; height: 100px"
+                >
+                  <i class="fas fa-check fa-3x"></i>
+                </div>
+                <h3 class="fw-bold">데이터 생성 준비 완료</h3>
+                <p class="text-muted mb-4">
+                  모든 설정이 완료되었습니다. 아래 버튼을 클릭하여 설정한 내용에
+                  따라 데이터를 생성하고 다운로드하세요.
+                </p>
+
+                <button
+                  id="generateBtn"
+                  type="button"
+                  onclick="generateAndDownload()"
+                  class="btn btn-success btn-lg"
+                >
+                  <i class="fas fa-download me-2"></i>
+                  파일 생성 및 다운로드
+                </button>
+
+                <div id="progressContainer" class="mt-5 d-none">
+                  <div class="progress">
+                    <div
+                      id="progressBar"
+                      class="progress-bar"
+                      role="progressbar"
+                      style="width: 0%"
+                      aria-valuenow="0"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                  <p class="text-muted mt-2" id="progressText">처리 중... 0%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 하단 네비게이션 -->
+          <div class="d-flex justify-content-between mt-4 pt-4 border-top">
+            <button
+              id="prevBtn"
+              type="button"
+              onclick="goToPrevStep()"
+              class="btn btn-secondary d-none"
+            >
+              <i class="fas fa-arrow-left me-2"></i>
+              이전 단계
+            </button>
+            <button
+              id="nextBtn"
+              type="button"
+              onclick="goToNextStep()"
+              class="btn btn-primary"
+            >
+              다음 단계
+              <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 귀여운 캐릭터 요소 -->
+    <div class="cute-element bounce-animation">
+      <img
+        src="https://cdn.crowdpic.net/detail-thumb/thumb_d_8090F3E4F1C137A8FA04EE853F23A66A.png"
+        alt="Cute Data Assistant"
+        style="width: 100px; height: 100px"
+      />
+    </div>
+
+    <!-- 알림 메시지 (토스트) -->
+    <div class="toast-container">
+      <div
+        id="statusMsg"
+        class="toast align-items-center"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">
+            <!-- 내용은 JavaScript에서 동적으로 채워짐 -->
+          </div>
+          <button
+            type="button"
+            class="btn-close me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      let sessionId = null;
+      let winNoCount = 0;
+      let currentStep = 1;
+
+      // 페이지 로드 시 초기화
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeDarkMode();
+        initializeRadioButtons();
+        updateStepNavigation();
+        document.getElementById("generateBtn").disabled = true;
+      });
+
+      // 라디오 버튼 이벤트 초기화
+      function initializeRadioButtons() {
+        // 라디오 버튼 변경 이벤트 처리
+        document
+          .querySelectorAll('input[name="winNoType"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", function () {
+              // 모든 옵션 컨테이너 숨기기
+              document
+                .getElementById("sequentialOptions")
+                .classList.add("d-none");
+              document.getElementById("prefixOptions").classList.add("d-none");
+              document
+                .getElementById("fileUploadOptions")
+                .classList.add("d-none");
+
+              // 선택된 옵션 컨테이너 표시하기
+              if (document.getElementById("sequential").checked) {
+                document
+                  .getElementById("sequentialOptions")
+                  .classList.remove("d-none");
+              } else if (document.getElementById("prefix").checked) {
+                document
+                  .getElementById("prefixOptions")
+                  .classList.remove("d-none");
+              } else if (document.getElementById("fileUpload").checked) {
+                document
+                  .getElementById("fileUploadOptions")
+                  .classList.remove("d-none");
+              }
+            });
+          });
+
+        // 파일 업로드 처리
+        document
+          .getElementById("winNoFile")
+          .addEventListener("change", handleFileUpload);
+      }
+
+      // 파일 업로드 처리 함수
+      async function handleFileUpload(e) {
+        const file = e.target.files[0];
+        if (!file) {
+          showStatus("파일이 선택되지 않았습니다.", "error");
+          return;
+        }
+
+        // 파일 크기 확인 (100MB 제한)
+        if (file.size > 100 * 1024 * 1024) {
+          showStatus(
+            "파일 크기가 너무 큽니다. 100MB 이하의 파일을 선택하세요.",
+            "error"
+          );
+          return;
+        }
+
+        showStatus("파일 업로드 중...", "info");
+
+        // FormData 객체 생성
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          // 파일 업로드 요청
+          const response = await fetch("/upload", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            sessionId = data.session_id;
+            winNoCount = data.count;
+            showStatus(data.message, "success");
+            document.getElementById("generateBtn").disabled = false;
+
+            // 행 수 입력 필드 값 업데이트
+            document.getElementById("rowCount").value = Math.min(
+              winNoCount,
+              10000
+            );
+          } else {
+            showStatus(data.message, "error");
+            sessionId = null;
+            winNoCount = 0;
+          }
+        } catch (error) {
+          showStatus("파일 업로드 중 오류가 발생했습니다.", "error");
+          console.error("Error:", error);
+        }
+      }
+
+      // 이전 단계로 이동
+      function goToPrevStep() {
+        if (currentStep > 1) {
+          goToStep(currentStep - 1);
+        }
+      }
+
+      // 다음 단계로 이동
+      function goToNextStep() {
+        if (validateCurrentStep()) {
+          goToStep(currentStep + 1);
+        }
+      }
+
+      // 현재 단계 유효성 검사
+      function validateCurrentStep() {
+        switch (currentStep) {
+          case 1:
+            const winNoType = document.querySelector(
+              'input[name="winNoType"]:checked'
+            ).value;
+            if (winNoType === "file" && !sessionId) {
+              showStatus(
+                "WIN_NO 데이터가 로드되지 않았습니다. 파일을 먼저 업로드하세요.",
+                "error"
+              );
+              return false;
+            }
+
+            if (
+              winNoType === "prefix" &&
+              !document.getElementById("prefixText").value
+            ) {
+              showStatus("접두사를 입력해주세요.", "error");
+              return false;
+            }
+            return true;
+
+          case 2:
+            const eventNo = document.getElementById("event_no").value;
+            const rewardNm = document.getElementById("reward_nm").value;
+            const rewardCd = document.getElementById("reward_cd").value;
+            const rowCount = parseInt(
+              document.getElementById("rowCount").value
+            );
+
+            if (!rowCount || !eventNo || !rewardNm || !rewardCd) {
+              showStatus("모든 필수 필드를 입력해주세요.", "error");
+              return false;
+            }
+            return true;
+
+          default:
+            return true;
+        }
+      }
+
+      // 특정 단계로 이동
+      function goToStep(step) {
+        if (step < 1 || step > 4) return;
+
+        // 현재 단계 스타일 업데이트
+        document.querySelectorAll(".step-pane").forEach((pane) => {
+          pane.classList.add("d-none");
+        });
+
+        // 새 단계 표시
+        document.getElementById(`step${step}`).classList.remove("d-none");
+
+        // 스텝 인디케이터 업데이트
+        updateStepIndicator(step);
+
+        // 현재 단계 업데이트
+        currentStep = step;
+
+        // 네비게이션 버튼 업데이트
+        updateStepNavigation();
+
+        // 3단계에서 자동으로 미리보기 생성
+        if (step === 3) {
+          generatePreview();
+        }
+      }
+
+      // 단계 인디케이터 업데이트
+      function updateStepIndicator(newStep) {
+        document.querySelectorAll(".step-item").forEach((item, index) => {
+          const stepNumber = index + 1;
+
+          // 모든 클래스 초기화
+          item.classList.remove("step-active", "step-completed");
+
+          if (stepNumber < newStep) {
+            // 완료된 단계
+            item.classList.add("step-completed");
+            const circle = item.querySelector(".step-circle");
+            circle.innerHTML = '<i class="fas fa-check"></i>';
+          } else if (stepNumber === newStep) {
+            // 현재 단계
+            item.classList.add("step-active");
+            const circle = item.querySelector(".step-circle");
+            circle.innerHTML = stepNumber;
+          } else {
+            // 미완료 단계
+            const circle = item.querySelector(".step-circle");
+            circle.innerHTML = stepNumber;
+          }
+        });
+      }
+
+      // 단계별 네비게이션 버튼 업데이트
+      function updateStepNavigation() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        // 이전 버튼 표시 설정
+        if (currentStep === 1) {
+          prevBtn.classList.add("d-none");
+        } else {
+          prevBtn.classList.remove("d-none");
+        }
+
+        // 다음 버튼 텍스트 및 스타일 설정
+        if (currentStep === 4) {
+          nextBtn.classList.add("d-none");
+        } else {
+          nextBtn.classList.remove("d-none");
+
+          if (currentStep === 3) {
+            nextBtn.innerHTML = '<i class="fas fa-check me-2"></i> 완료';
+          } else {
+            nextBtn.innerHTML =
+              '다음 단계 <i class="fas fa-arrow-right ms-2"></i>';
+          }
+        }
+      }
+
+      // 상태 메시지 표시
+      function showStatus(message, type) {
+        const toastEl = document.getElementById("statusMsg");
+        const toastBody = toastEl.querySelector(".toast-body");
+
+        // 타입에 따른 스타일 설정
+        let icon = "";
+        switch (type) {
+          case "success":
+            icon = '<i class="fas fa-check-circle text-success me-2"></i>';
+            toastEl.classList.remove(
+              "bg-danger",
+              "bg-info",
+              "bg-warning",
+              "text-white"
+            );
+            toastEl.classList.add("bg-light");
+            break;
+          case "error":
+            icon = '<i class="fas fa-exclamation-circle text-danger me-2"></i>';
+            toastEl.classList.remove("bg-success", "bg-info", "bg-warning");
+            toastEl.classList.add("bg-light", "text-dark");
+            break;
+          case "info":
+            icon = '<i class="fas fa-info-circle text-info me-2"></i>';
+            toastEl.classList.remove("bg-danger", "bg-success", "bg-warning");
+            toastEl.classList.add("bg-light", "text-dark");
+            break;
+          case "warning":
+            icon =
+              '<i class="fas fa-exclamation-triangle text-warning me-2"></i>';
+            toastEl.classList.remove("bg-danger", "bg-success", "bg-info");
+            toastEl.classList.add("bg-light", "text-dark");
+            break;
+        }
+
+        // 메시지 내용 구성
+        toastBody.innerHTML = icon + message;
+
+        // Bootstrap 5 토스트 표시
+        const toast = new bootstrap.Toast(toastEl, {
+          autohide: true,
+          delay: 5000,
+        });
+        toast.show();
+
+        // 파일 상태 메시지 표시 (1단계에만)
+        if (
+          currentStep === 1 &&
+          document.getElementById("fileUpload").checked
+        ) {
+          const fileStatusEl = document.getElementById("fileStatus");
+
+          // 파일 상태 메시지 클래스 설정
+          fileStatusEl.className = `alert mt-3 ${
+            type === "success"
+              ? "alert-success"
+              : type === "error"
+              ? "alert-danger"
+              : type === "info"
+              ? "alert-info"
+              : "alert-warning"
+          }`;
+
+          // 파일 상태 메시지 내용 설정
+          fileStatusEl.innerHTML = `
+            <div class="d-flex">
+              <div>${icon}</div>
+              <div>${message}</div>
+            </div>
+          `;
+
+          // 파일 상태 메시지 표시
+          fileStatusEl.classList.remove("d-none");
+        }
+      }
+
+      // 진행 바 업데이트
+      function updateProgress(percent) {
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
+        progressBar.style.width = percent + "%";
+        progressBar.setAttribute("aria-valuenow", percent);
+        progressText.textContent = `처리 중... ${percent}%`;
+      }
+
+      // 진행 표시줄 표시/숨김
+      function showProgress(show) {
+        const progressContainer = document.getElementById("progressContainer");
+        if (show) {
+          progressContainer.classList.remove("d-none");
+        } else {
+          progressContainer.classList.add("d-none");
+        }
+      }
+
+      // 미리보기 생성 함수
+      async function generatePreview() {
+        const winNoType = document.querySelector(
+          'input[name="winNoType"]:checked'
+        ).value;
+        const rowCount = parseInt(document.getElementById("rowCount").value);
+        const eventNo = document.getElementById("event_no").value;
+        const rewardNm = document.getElementById("reward_nm").value;
+        const rewardCd = document.getElementById("reward_cd").value;
+        const useYn = document.getElementById("use_yn").value;
+
+        if (!rowCount || !eventNo || !rewardNm || !rewardCd) {
+          showStatus("모든 필수 필드를 입력해주세요.", "error");
+          return;
+        }
+
+        // 파일 업로드 방식 체크
+        if (winNoType === "file" && !sessionId) {
+          showStatus(
+            "WIN_NO 데이터가 로드되지 않았습니다. 파일을 먼저 업로드하세요.",
+            "error"
+          );
+          return;
+        }
+
+        // 생성 버튼 비활성화 및 로딩 표시
+        const previewBtn = document.getElementById("previewBtn");
+        previewBtn.disabled = true;
+        previewBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin me-2"></i> 미리보기 생성 중...';
+        showStatus("데이터 미리보기를 생성 중입니다...", "info");
+
+        const requestData = {
+          winNoType: winNoType,
+          count: rowCount,
+          eventNo: eventNo,
+          rewardNm: rewardNm,
+          rewardCd: rewardCd,
+          useYn: useYn,
+        };
+
+        // 선택된 방식에 따라 필요한 데이터 추가
+        if (winNoType === "file") {
+          requestData.session_id = sessionId;
+        } else if (winNoType === "sequential") {
+          requestData.startNumber =
+            document.getElementById("startNumber").value;
+        } else if (winNoType === "prefix") {
+          requestData.prefix = document.getElementById("prefixText").value;
+          requestData.digitCount = document.getElementById("digitCount").value;
+        }
+
+        try {
+          const response = await fetch("/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // 성공 메시지 표시
+            showStatus(data.message, "success");
+
+            // 미리보기 표시
+            const tableBody = document.getElementById("previewTableBody");
+            tableBody.innerHTML = "";
+
+            // 샘플 데이터로 미리보기 생성 (임의 데이터 사용)
+            for (let i = 0; i < Math.min(10, rowCount); i++) {
+              const winNo =
+                winNoType === "sequential"
+                  ? (parseInt(requestData.startNumber) + i).toString()
+                  : winNoType === "prefix"
+                  ? `${requestData.prefix}${(i + 1)
+                      .toString()
+                      .padStart(parseInt(requestData.digitCount), "0")}`
+                  : `Sample-${i + 1}`;
+
+              const tr = document.createElement("tr");
+
+              tr.innerHTML = `
+                <td>${eventNo}</td>
+                <td>${winNo}</td>
+                <td>${rewardNm}</td>
+                <td>${rewardCd}</td>
+                <td>${useYn}</td>
+              `;
+              tableBody.appendChild(tr);
+            }
+
+            // 미리보기 컨테이너 표시
+            document
+              .getElementById("previewTableContainer")
+              .classList.remove("d-none");
+
+            // 생성 버튼 활성화
+            document.getElementById("generateBtn").disabled = false;
+          } else {
+            showStatus(data.message, "error");
+          }
+        } catch (error) {
+          showStatus("데이터 생성 중 오류가 발생했습니다.", "error");
+          console.error("Error:", error);
+        } finally {
+          // 버튼 상태 복원
+          previewBtn.disabled = false;
+          previewBtn.innerHTML =
+            '<i class="fas fa-sync-alt me-2"></i> 미리보기 생성';
+        }
+      }
+
+      // 파일 생성 및 다운로드 함수
+      async function generateAndDownload() {
+        const winNoType = document.querySelector(
+          'input[name="winNoType"]:checked'
+        ).value;
+        const rowCount = parseInt(document.getElementById("rowCount").value);
+        const eventNo = document.getElementById("event_no").value;
+        const rewardNm = document.getElementById("reward_nm").value;
+        const rewardCd = document.getElementById("reward_cd").value;
+        const useYn = document.getElementById("use_yn").value;
+        const outputFormat = document.getElementById("outputFormat").value;
+
+        if (!rowCount || !eventNo || !rewardNm || !rewardCd) {
+          showStatus("모든 필수 필드를 입력해주세요.", "error");
+          return;
+        }
+
+        // 파일 업로드 방식 체크
+        if (winNoType === "file" && !sessionId) {
+          showStatus(
+            "WIN_NO 데이터가 로드되지 않았습니다. 파일을 먼저 업로드하세요.",
+            "error"
+          );
+          return;
+        }
+
+        // 버튼 상태 변경 (로딩 표시)
+        const generateBtn = document.getElementById("generateBtn");
+        generateBtn.disabled = true;
+        generateBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin me-2"></i> 파일 생성 중...';
+
+        // 진행 표시줄 표시
+        showProgress(true);
+        updateProgress(10);
+
+        showStatus("파일을 생성하고 있습니다. 잠시만 기다려주세요...", "info");
+
+        const requestData = {
+          winNoType: winNoType,
+          count: rowCount,
+          eventNo: eventNo,
+          rewardNm: rewardNm,
+          rewardCd: rewardCd,
+          useYn: useYn,
+          outputFormat: outputFormat,
+        };
+
+        // 선택된 방식에 따라 필요한 데이터 추가
+        if (winNoType === "file") {
+          requestData.session_id = sessionId;
+        } else if (winNoType === "sequential") {
+          requestData.startNumber =
+            document.getElementById("startNumber").value;
+        } else if (winNoType === "prefix") {
+          requestData.prefix = document.getElementById("prefixText").value;
+          requestData.digitCount = document.getElementById("digitCount").value;
+        }
+
+        try {
+          updateProgress(30);
+
+          const response = await fetch("/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          updateProgress(60);
+
+          const data = await response.json();
+
+          if (data.success) {
+            updateProgress(80);
+
+            // 성공 메시지 표시
+            showStatus(data.message, "success");
+
+            // 다운로드 링크 생성 및 클릭
+            const link = document.createElement("a");
+            link.href = data.download_url;
+            link.download =
+              outputFormat === "xlsx"
+                ? "generated_data.xlsx"
+                : "generated_data.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            updateProgress(100);
+
+            // 성공 아이콘에 애니메이션 추가
+            const successIcon = document.querySelector(
+              "#step4 .rounded-circle"
+            );
+            successIcon.classList.add("bounce-animation");
+
+            // 다운로드 완료 표시
+            showStatus("파일 생성 및 다운로드가 완료되었습니다!", "success");
+          } else {
+            showStatus(data.message, "error");
+            updateProgress(0);
+          }
+        } catch (error) {
+          showStatus("데이터 생성 중 오류가 발생했습니다.", "error");
+          console.error("Error:", error);
+          updateProgress(0);
+        } finally {
+          // 버튼 상태 복원
+          generateBtn.disabled = false;
+          generateBtn.innerHTML =
+            '<i class="fas fa-download me-2"></i> 파일 생성 및 다운로드';
+
+          // 5초 후 진행 표시줄 숨기기
+          setTimeout(() => {
+            showProgress(false);
+          }, 5000);
+        }
+      }
+    </script>
+  </body>
+</html>
