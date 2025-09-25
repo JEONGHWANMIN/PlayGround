@@ -1,0 +1,143 @@
+.header {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 9.5px 0;
+}
+
+.content_width {
+    width: 1120px;
+}
+
+.header_content_layout {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header_logo_layout {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.header_logo_img {
+    width: 40px;
+    height: 40px;
+}
+
+.header_logo_text {
+    font-family: "ROKAF Sans";
+    font-weight: 700;
+    font-size: 26px;
+    color: #3692FF;
+}
+
+.header_login_button {
+    padding: 0 43px;
+    background-color: #3692FF;
+    color: #F3F4F6;
+    height: 48px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Header End */
+
+.banner_section {
+    background-color: #CFE5FF;
+    display: flex;
+    justify-content: center;
+}
+
+.banner_content_layout {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-top: 200px;
+}
+
+.banner_content_info_layout {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    height: 260px;
+}
+
+.banner_text {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.4;
+    color: #374151;
+}
+
+.banner_button {
+    padding: 0 124px;
+    background-color: #3692FF;
+    color: #F3F4F6;
+    height: 56px;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Banner End */
+
+.about_section {
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about_content_layout {
+    height: 444px;
+    display: flex;
+    gap: 64px;
+    align-items: center;
+}
+
+.about_text_tag {
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 26px;
+    color: #3692FF;
+}
+
+.about_main_text {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.4;
+    letter-spacing: 0.8px;
+    color: #374151;
+    margin-top: 12px;
+}
+
+.about_sub_text {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    color: #374151;
+    margin-top: 24px;
+}
+
+.about_left_text_layout {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.about_content_wrapper_layout {
+    height: 720px;
+    display: flex;
+    align-items: center;
+}
+
+.text-right {
+    text-align: right;
+}

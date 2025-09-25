@@ -162,10 +162,10 @@ async function test() {
   const files: File[] = await executeWithLimit([
     () => getFile('1-img.png'),
     () => getFile('2-book.pdf'),
-    () => getFile('3-index.html'),
+    () => getFile('3-index.html.html'),
     () => getFile('4-img2.png'),
     () => getFile('5-book.pdf'),
-    () => getFile('6-index.html'),
+    () => getFile('6-index.html.html'),
     () => getFile('7-img.png'),
   ], 3);
 

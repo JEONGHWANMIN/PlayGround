@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/common.css">
+</head>
+<script>
+  class View {
+    constructor() {}
+    
+    render() {
+      const wrapper = document.createElement('div')
+      wrapper.innerHTML = this.template()
+      return wrapper.firstElementChild
+    }
+    
+    template() {}
+  }
+  
+  class BannerView extends View{
+    template() {
+      return `
+        <div class="banner_content_layout">
+          <div class="banner_content_info_layout">
+            <p class="banner_text">일상의 모든 물건을 <br> 거래해 보세요</p>
+            <button class="banner_button">
+              구경하러 가기
+            </button>
+          </div>
+          <img src="./assets/image/Img_home_top.png" alt="배너 이미지" />
+        </div>
+      `
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const bannerSection = document.querySelector('.banner_section')
+    bannerSection.appendChild(new BannerView().render())
+  })
+</script>
+<body>
+  <header class="header">
+    <div class="content_width header_content_layout">
+      <div class="header_logo_layout">
+        <img class="header_logo_img" src="./assets/svg/ic_panda_face.svg" alt="판다마켓 로고 이미지"/>
+        <div class="header_logo_text">판다마켓</div>
+      </div>
+      <button class="header_login_button">로그인</button>
+    </div>
+  </header>
+  <section class="banner_section">
+<!--    <div class="banner_content_layout">-->
+<!--      <div class="banner_content_info_layout">-->
+<!--        <p class="banner_text">일상의 모든 물건을 <br> 거래해 보세요</p>-->
+<!--        <button class="banner_button">-->
+<!--          구경하러 가기-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <img src="./assets/image/Img_home_top.png" alt="배너 이미지" />-->
+<!--    </div>-->
+  </section>
+  <section class="about_section">
+    <div class="about_content_wrapper_layout">
+      <div class="about_content_layout">
+        <img src="/assets/image/Img_home_01.png" alt="어바웃 핫아이템 이미지">
+        <div>
+          <p class="about_text_tag">Hot item</p>
+          <p class="about_main_text">인기 상품을 <br> 확인해 보세요</p>
+          <p class="about_sub_text">가장 HOT한 중고거래 물품을 <br>
+            판다 마켓에서 확인해 보세요</p>
+        </div>
+      </div>
+    </div>
+    <div class="about_content_wrapper_layout">
+      <div class="about_content_layout">
+        <div>
+          <p class="about_text_tag text-right">Search</p>
+          <p class="about_main_text text-right">구매를 원하는 <br>
+            상품을 검색하세요</p>
+          <p class="about_sub_text text-right">구매하고 싶은 물품은 검색해서 <br> 쉽게 찾아보세요</p>
+        </div>
+        <img src="/assets/image/Img_home_02.png" alt="어바웃 핫아이템 이미지">
+      </div>
+    </div>
+    <div class="about_content_wrapper_layout">
+      <div class="about_content_layout">
+        <img src="/assets/image/Img_home_03.png" alt="어바웃 핫아이템 이미지">
+        <div>
+          <p class="about_text_tag">Register</p>
+          <p class="about_main_text">판매를 원하는 <br> 상품을 등록하세요</p>
+          <p class="about_sub_text">어떤 물건이든 판매하고 싶은 상품을 <br> 쉽게 등록하세요</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>섹션3</section>
+  <footer>푸터</footer>
+<!-- 완성  -->
+<!-- 자바스크립트 컴포넌트 class  -->
+</body>
+</html>

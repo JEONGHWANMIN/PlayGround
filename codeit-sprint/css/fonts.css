@@ -1,0 +1,19 @@
+/* Pretendard CDN 불러오기 (CSS 파일에서) */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+/* ROKAF Sans 폰트 로드 */
+@font-face {
+    font-family: 'ROKAF Sans';
+    src: url('../assets/fonts/ROKAF Sans Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'ROKAF Sans';
+    src: url('../assets/fonts/ROKAF Sans Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}

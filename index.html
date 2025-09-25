@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<style>
+  #app {
+      & #a {
+          width: 80px;
+          height: 80px;
+          background-color: red;
+      }
+      
+      & #b {
+          width: 80px;
+          height: 80px;
+          background-color: blue;
+      }
+  }
+</style>
+<body>
+  <div></div>
+  <div></div>
+  <div></div>
+</body>
+
+<script>
+  const inputs = document.querySelectorAll('.ui-input')
+  
+  inputs.forEach(input => {
+    input.addEventListener('change', (e) => {
+      console.log("e:", e)
+    })
+  })
+</script>
+</html>

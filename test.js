@@ -1,80 +1,37 @@
-// // function* Generator() {
-// //   yield 1;
-// //   yield 2;
-// //   yield 3;
-// // }
+// 코드 싫행 전 (코드평가)
+// var a, let b, const c
+// b = 2
+// c = 3
+// a -> 1
 
-// // const generator = Generator();
 
-// // console.log(generator.next());
-// // console.log("다른 작업 1");
-// // console.log(generator.next());
-// // console.log("다른 작업 2");
-// // console.log(generator.next());
-// // console.log("다른 작업 3");
-// // console.log(generator.next());
+// var, let, const -> 이 3가의 차이점 뭔가요?
+// 호이스팅 -> 코드의 선언부가 끌려올려지듯 동작하는 현상
+// let, const -> 호이스팅 가능, TDZ 존
+// console.log(b)
 
-// const a = [1, 2, 3];
 
-// const iterator = a[Symbol.iterator]();
 
-// console.log(iterator.next());
-// console.log(iterator.next());
-// console.log(iterator.next());
-// console.log(iterator.next());
+var a = 1;
+let b = 2;
+const c = 3;
 
-// const test = {
-//   [Symbol.iterator]: function () {
-//     let i = 0;
-//     return {
-//       next: function () {
-//         if (i > 5) {
-//           return { value: undefined, done: true };
-//         }
-//         return { value: i++, done: false };
-//       },
-//     };
-//   },
-// };
 
-// console.log(test);
-
-// // const iter = test[Symbol.iterator]();
-
-// for (const i of test) {
-//   console.log(i);
-// }
-
-// console.log([...test]);
-
-const a = [1, 2, 3, 4, 5];
-
-for (const i of a) {
-  console.log(i);
-}
-
-a[Symbol.iterator] = function () {
-  let i = 100;
-  return {
-    next: function () {
-      if (i < 5) {
-        return { value: undefined, done: true };
-      }
-      return { value: i--, done: false };
-    },
-  };
-};
-
-const iter = a[Symbol.iterator]();
-
-console.log(iter.next());
-console.log(iter.next());
-console.log(iter.next());
-console.log(iter.next());
-console.log(iter.next());
-console.log(iter.next());
-console.log(iter.next());
-
-for (const i of a) {
-  console.log(i);
-}
+/**
+ * 기존 -> 스타일드 컴포넌트, 이모션 -> CSR 줄어들고
+ * 현재 -> 테일윈드 (압도적), vanilla-extract, panda-css
+ * 이유 : CSR -> Next.js SSR -> 서버컴포넌트 -> tailwind 사용이 가능
+ *
+ *
+ * Next.js React
+ * 상태관리 - zustand, recoil jotai
+ *
+ * 클라이언트 상태관리 -> zustand, recoil
+ * 서버 상태관리 -> tanstack-query
+ *
+ * css : tailwind, vanilla-extract
+ * ui 라이브러리 : radix
+ *
+ * // client -> server -> 1. A API, 2. B API, 3. C API
+ * // server interface  -> client
+ */
